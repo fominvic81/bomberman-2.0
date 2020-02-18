@@ -69,8 +69,8 @@ const createPlayer = (x, y) => {
         
                 for (let i = 0 - count / 2; i <= count / 2; ++i) {
                     let cord = [(x - w/2) / tlSize + 0.5, (y - h/2 + i * step - (tlSize - h) / 2) / tlSize + 1];
-                    if (map[Math.floor(cord[0])][Math.floor(cord[1])] != 0) {
-                        if (map[Math.floor(cord[0]) + 1][Math.floor(cord[1])] == 0) { 
+                    if (tiles[map[Math.floor(cord[0])][Math.floor(cord[1])].tile].collide) {
+                        if (tiles[map[Math.floor(cord[0]) + 1][Math.floor(cord[1])].tile].collide == 0) { 
                             if (f(cord[0], 2) > 100 - ice) {
                                 this.nx = Math.ceil(cord[0]) * tlSize - (tlSize - w) / 2;
                             }
@@ -82,8 +82,8 @@ const createPlayer = (x, y) => {
         
                 for (let i = 0 - count / 2; i <= count / 2; ++i) {
                     let cord = [(x - w/2 - (tlSize - w)) / tlSize + 0.5, (y - h/2 + i * step - (tlSize - h) / 2) / tlSize + 1];
-                    if (map[Math.ceil(cord[0])][Math.floor(cord[1])] != 0) {
-                        if (map[Math.ceil(cord[0]) - 1][Math.floor(cord[1])] == 0) { 
+                    if (tiles[map[Math.ceil(cord[0])][Math.floor(cord[1])].tile].collide != 0) {
+                        if (tiles[map[Math.ceil(cord[0]) - 1][Math.floor(cord[1])].tile].collide == 0) { 
                             if (f(cord[0], 2) < ice) {
                                 this.nx = Math.floor(cord[0]) * tlSize + (tlSize - w) / 2;
                             }
@@ -97,8 +97,8 @@ const createPlayer = (x, y) => {
         
                 for (let i = 0 - count / 2; i <= count / 2; ++i) {
                     let cord = [(x - w/2 + i * step - (tlSize - w) / 2 - 0) / tlSize + 1, (y - h/2) / tlSize + 0.5];
-                    if ((map[Math.floor(cord[0])][Math.floor(cord[1])] != 0)) {
-                        if (map[Math.floor(cord[0])][Math.floor(cord[1]) + 1] == 0) {
+                    if ((tiles[map[Math.floor(cord[0])][Math.floor(cord[1])].tile].collide != 0)) {
+                        if (tiles[map[Math.floor(cord[0])][Math.floor(cord[1]) + 1].tile].collide == 0) {
                             if (f(cord[1], 2) > 100 - ice) {
                                 this.ny = (Math.ceil(cord[1])) * tlSize - (tlSize - h) / 2;     
                             }    
@@ -110,8 +110,8 @@ const createPlayer = (x, y) => {
                 
                 for (let i = 0 - count / 2; i <= count / 2; ++i) {
                     let cord = [(x - w/2 + i * step - (tlSize - w) / 2 - 0) / tlSize + 1, (y - h/2 - (tlSize - h)) / tlSize + 0.5];
-                    if ((map[Math.floor(cord[0])][Math.ceil(cord[1])] != 0)) {
-                        if (map[Math.floor(cord[0])][Math.ceil(cord[1]) - 1] == 0) {
+                    if ((tiles[map[Math.floor(cord[0])][Math.ceil(cord[1])].tile].collide != 0)) {
+                        if (tiles[map[Math.floor(cord[0])][Math.ceil(cord[1]) - 1].tile].collide == 0) {
                             if (f(cord[1], 2) < ice) {
                                 this.ny = (Math.floor(cord[1])) * tlSize + (tlSize - h) / 2;     
                             }    

@@ -2,9 +2,13 @@ const tileSize = 32;
 
 const handleLoad = () => {
 	i_grass = app.img('assets/grass.png');
+	for (tile in tiles) {
+		tiles[tile].image = app.img(tiles[tile].image);
+	}
+	// tiles.g.image = app.img(tiles.g.image);
 	playerSettings.image = app.img(playerSettings.image);
 	bombSettings.image = app.img(bombSettings.image);
-	i_wall = app.img('assets/wall.png');
+	explosSettings.image = app.img(explosSettings.image);
 };
 
 const handleStart = () => {

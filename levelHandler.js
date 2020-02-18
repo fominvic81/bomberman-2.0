@@ -8,17 +8,28 @@ const createLevel = (level) => {
         update (dt) {
             for (entity of this.entities) {
                 entity.update(dt);
+                if (entity.entityName === 'player') {
+                    entity.move(this.map);
+                }
             }
 
-            if (entity.entityName === 'player') {
-                entity.move(this.map);
+            for (let x = 0; x < this.map.length; ++x) {
+                for (let y = 0; y < this.map[x].length; ++y) {
+                    if (this.map[x][y].st <= 0) {
+                        this.map[x][y].tile = 0;
+                        this.map[x][y].st = 1;
+                    }
+                }
             }
+
         },
 
         render () {
-            for (let x = 0; x < 16; ++x) {
-                for (let y = 0; y < 16; ++y) {
-                    draw(this.map[x][y] === 1 ? i_wall : i_grass, x, y, 1, 1);
+            for (let x = 0; x < this.map.length; ++x) {
+                for (let y = 0; y < this.map[x].length; ++y) {
+                    draw(tiles[this.map[x][y].tile].image, x, y, 1, 1);
+                    // draw(tiles.g.image, x, y, 1, 1);
+                    // draw(i_grass, x, y, 1, 1);
                 }
             }
 
@@ -29,8 +40,19 @@ const createLevel = (level) => {
         },
 
         addEntity (entity) {
+            entity.id = Symbol('id');
             this.entities.push(entity);
         },
+
+        removeEntity(id) {
+            for (let i = 0; i < this.entities.length; ++i) {
+                let entity = this.entities[i];
+                if (entity.id === id) {
+                    this.entities.splice(i, 1);
+                    break;
+                }
+            }
+        }
         
     }
 }

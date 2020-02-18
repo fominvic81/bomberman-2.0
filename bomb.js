@@ -10,17 +10,22 @@ const createBomb = (x, y) => {
         time: 0,
         width: bombSettings.width,
         height: bombSettings.height,
+        life_time: bombSettings.life_time,
         entityName: 'bomb',
 
         update (dt) {
 
-            this.nx += this.dx;
-            this.ny += this.dy;
-
-            this.x = this.nx;
-            this.y = this.ny;
 
             this.time += dt;
+
+            
+
+
+
+            if (this.time >= this.life_time) {
+                level.addEntity(createExplos(this.x, this.y, 'center', 4));
+                level.removeEntity(this.id);
+            }
         },
 
         render () {
@@ -31,4 +36,5 @@ const createBomb = (x, y) => {
     };
 }
 
-level.addEntity(createBomb(2, 2));
+level.addEntity(createBomb(4, 5));
+level.addEntity(createBomb(4, 5));
