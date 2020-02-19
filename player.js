@@ -62,7 +62,7 @@ const createPlayer = (x, y) => {
                 this.dx += this.speed * dt;
                 this.dir = 'right'; 
         	}
-            if (app.key('Shift')) {
+            if (app.key(' ')) {
                 if (this.putBombTimer >= 0.2) {
                     level.addEntity(createBomb(Math.round(this.x), Math.round(this.y)));
                     this.putBombTimer = 0;
