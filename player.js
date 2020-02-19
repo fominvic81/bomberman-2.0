@@ -17,24 +17,61 @@ const createPlayer = (x, y) => {
         ny: y,
         dx: 0,
         dy: 0,
+        dir: 'down',
+        time: 0,
+        frameTimer: 0,
+        frameCount: playerSettings.upFrames.length,
+        upFrames: playerSettings.upFrames,
+        downFrames: playerSettings.downFrames,
+        leftFrames: playerSettings.leftFrames,
+        rightFrames: playerSettings.rightFrames,
+        frame: 0,
+        putBombTimer: 10,
         width: playerSettings.width,
         height: playerSettings.height,
+        rendWidth: playerSettings.rendWidth,
+        rendHeight: playerSettings.rendHeight,
         speed: playerSettings.speed,
         entityName: 'player',
 
         update (dt) {
+            this.time += dt;
+            this.putBombTimer += dt;
+            this.frameTimer += dt;
+
+            if (this.frameTimer > 0.2) {
+                this.frameTimer = 0;
+                ++this.frame;
+                this.frame = this.frame % this.frameCount;
+            }
+
             this.dx = 0, this.dy = 0;
+            if (app.key('ArrowUp')) {
+                this.dy -= this.speed * dt;
+                this.dir = 'up';
+            }
+            if (app.key('ArrowDown')) {
+                this.dy += this.speed * dt;
+                this.dir = 'down';
+            }
         	if (app.key('ArrowLeft')) {
-        		this.dx -= this.speed * dt;
+                this.dx -= this.speed * dt;
+                this.dir = 'left';
         	}
         	if (app.key('ArrowRight')) {
-        		this.dx += this.speed * dt;
+                this.dx += this.speed * dt;
+                this.dir = 'right'; 
         	}
-        	if (app.key('ArrowUp')) {
-        		this.dy -= this.speed * dt;
-        	}
-        	if (app.key('ArrowDown')) {
-        		this.dy += this.speed * dt;
+            if (app.key('Shift')) {
+                if (this.putBombTimer >= 0.2) {
+                    level.addEntity(createBomb(Math.round(this.x), Math.round(this.y)));
+                    this.putBombTimer = 0;
+                }
+            }
+
+            if (this.dx == 0 && this.dy == 0) {
+                this.dir = 'down';
+                this.frame = 0;
             }
             
             // this.nx += this.dx;
@@ -129,7 +166,16 @@ const createPlayer = (x, y) => {
         
 
         render () {
-            draw(playerSettings.image, this.x, this.y, this.width, this.height);
+            // draw(playerSettings.image, this.x, this.y, this.width, this.height);
+            if (this.dir == 'down') {
+                draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+            } else if (this.dir == 'up') {
+                draw(this.upFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+            } else if (this.dir == 'left') {
+                draw(this.leftFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+            } else if (this.dir == 'right') {
+                draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+            }
         },
     }
 }

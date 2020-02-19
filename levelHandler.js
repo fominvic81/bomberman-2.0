@@ -5,6 +5,14 @@ const createLevel = (level) => {
         map: level.tileMap,
         entities: [],
 
+        setup () {
+            for (let x = 0; x < this.map.length; ++x) {
+                for (let y = 0; y < this.map[x].length; ++y) {
+                    this.map[x][y].st = tiles[this.map[x][y].tile].maxSt;
+                }
+            }
+        },
+
         update (dt) {
             for (entity of this.entities) {
                 entity.update(dt);
@@ -28,8 +36,6 @@ const createLevel = (level) => {
             for (let x = 0; x < this.map.length; ++x) {
                 for (let y = 0; y < this.map[x].length; ++y) {
                     draw(tiles[this.map[x][y].tile].image, x, y, 1, 1);
-                    // draw(tiles.g.image, x, y, 1, 1);
-                    // draw(i_grass, x, y, 1, 1);
                 }
             }
 
@@ -58,3 +64,4 @@ const createLevel = (level) => {
 }
 
 let level = createLevel(level2);
+level.setup();

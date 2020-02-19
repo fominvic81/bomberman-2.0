@@ -5,9 +5,28 @@ const handleLoad = () => {
 	for (tile in tiles) {
 		tiles[tile].image = app.img(tiles[tile].image);
 	}
-	// tiles.g.image = app.img(tiles.g.image);
-	playerSettings.image = app.img(playerSettings.image);
-	bombSettings.image = app.img(bombSettings.image);
+	// bombSettings.image = app.img(bombSettings.image);
+	for (let i = 0; i < bombSettings.frames.length; ++i) {
+		let road = bombSettings.road + bombSettings.frames[i];
+		bombSettings.frames[i] = app.img(road);
+	}
+	// playerSettings.image = app.img(playerSettings.image);
+	for (let i = 0; i < playerSettings.upFrames.length; ++i) {
+		let road = playerSettings.road + playerSettings.upFrames[i];
+		playerSettings.upFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < playerSettings.downFrames.length; ++i) {
+		let road = playerSettings.road + playerSettings.downFrames[i];
+		playerSettings.downFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < playerSettings.leftFrames.length; ++i) {
+		let road = playerSettings.road + playerSettings.leftFrames[i];
+		playerSettings.leftFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < playerSettings.rightFrames.length; ++i) {
+		let road = playerSettings.road + playerSettings.rightFrames[i];
+		playerSettings.rightFrames[i] = app.img(road);
+	}
 	explosSettings.image = app.img(explosSettings.image);
 };
 
