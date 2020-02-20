@@ -8,7 +8,7 @@ function f(number, count) {
 }
 
 
-
+//// додати можливість настроювати кнопки керування гравцем
 const createPlayer = (x, y) => {
     return {
         x: x,

@@ -6,8 +6,22 @@ const createExplos = (x, y, dir, power) => {
         x: x,
         y: y,
         time: 0,
+        frameTimer: 0,
+        frameCount: explosSettings.centerFrames.length,
+        centerFrames: explosSettings.centerFrames,
+        upFrames: explosSettings.upFrames,
+        upEndFrames: explosSettings.upEndFrames,
+        downFrames: explosSettings.downFrames,
+        downEndFrames: explosSettings.downEndFrames,
+        leftFrames: explosSettings.leftFrames,
+        leftEndFrames: explosSettings.leftEndFrames,
+        rightFrames: explosSettings.rightFrames,
+        rightEndFrames: explosSettings.rightEndFrames,
+        frame: 0,
         width: explosSettings.width,
         height: explosSettings.height,
+        rendWidth: explosSettings.rendWidth,
+        rendHeight: explosSettings.rendHeight,
         life_time: explosSettings.life_time,
         entityName: 'explos',
         dir: dir,
@@ -16,12 +30,16 @@ const createExplos = (x, y, dir, power) => {
 
         update (dt) {
             this.time += dt;
-            // console.log(this.x, this.y);
+            this.time = Math.min(this.time, this.life_time); 
+
+            
+            this.frame = Math.floor(this.time / (this.life_time / this.frameCount));
 
             if (!tiles[level.map[this.x][this.y].tile].explosResist) {
                 level.map[this.x][this.y].st -= 1;
-                level.removeEntity(this.id);
-                return;
+                // level.removeEntity(this.id);
+                this.power = 0;
+                // return;
             }
 
             if (this.power == 0) this.spread = true;
@@ -50,7 +68,34 @@ const createExplos = (x, y, dir, power) => {
         },
 
         render () {
-            draw(explosSettings.image, this.x, this.y, this.width, this.height);
+            // draw(explosSettings.image, this.x, this.y, this.width, this.height);
+            if (this.dir == 'center') {
+                draw(this.centerFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+            } else if (this.dir == 'up') {
+                if (this.power != 0) {
+                    draw(this.upFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                } else {
+                    draw(this.upEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                }
+            } else if (this.dir == 'down') {
+                if (this.power != 0) {
+                    draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                } else {
+                    draw(this.downEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                }
+            } else if (this.dir == 'left') {
+                if (this.power != 0) {
+                    draw(this.leftFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                } else {
+                    draw(this.leftEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                }
+            } else if (this.dir == 'right') {
+                if (this.power != 0) {
+                    draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                } else {
+                    draw(this.rightEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                }
+            }
         },
 
 

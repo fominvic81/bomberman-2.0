@@ -36,7 +36,7 @@ const createBomb = (x, y) => {
 
 
             if (this.time >= this.life_time) {
-                level.addEntity(createExplos(this.x, this.y, 'center', 10));
+                level.addEntity(createExplos(this.x, this.y, 'center', 3));
                 level.removeEntity(this.id);
             }
         },
@@ -49,5 +49,5 @@ const createBomb = (x, y) => {
     };
 }
 
-level.addEntity(createBomb(4, 5));
-level.addEntity(createBomb(5, 4));
+// level.addEntity(createBomb(4, 5));
+// level.addEntity(createBomb(5, 4));

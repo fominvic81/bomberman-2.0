@@ -15,7 +15,7 @@ const tiles = {
         image: 'assets/brick.png',
         collide: true,
         explosResist: false,
-        maxSt: 2,
+        maxSt: 1,
     },
 
     2: {

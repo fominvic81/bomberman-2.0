@@ -1,4 +1,4 @@
-const tileSize = 32;
+const tileSize = 44;
 
 const handleLoad = () => {
 	i_grass = app.img('assets/grass.png');
@@ -27,7 +27,43 @@ const handleLoad = () => {
 		let road = playerSettings.road + playerSettings.rightFrames[i];
 		playerSettings.rightFrames[i] = app.img(road);
 	}
-	explosSettings.image = app.img(explosSettings.image);
+	// explosSettings.image = app.img(explosSettings.image);
+	for (let i = 0; i < explosSettings.centerFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.centerFrames[i];
+		explosSettings.centerFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.upFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.upFrames[i];
+		explosSettings.upFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.upEndFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.upEndFrames[i];
+		explosSettings.upEndFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.downFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.downFrames[i];
+		explosSettings.downFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.downEndFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.downEndFrames[i];
+		explosSettings.downEndFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.leftFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.leftFrames[i];
+		explosSettings.leftFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.leftEndFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.leftEndFrames[i];
+		explosSettings.leftEndFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.rightFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.rightFrames[i];
+		explosSettings.rightFrames[i] = app.img(road);
+	}
+	for (let i = 0; i < explosSettings.rightEndFrames.length; ++i) {
+		let road = explosSettings.road + explosSettings.rightEndFrames[i];
+		explosSettings.rightEndFrames[i] = app.img(road);
+	}
 };
 
 const handleStart = () => {

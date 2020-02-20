@@ -63,5 +63,5 @@ const createLevel = (level) => {
     }
 }
 
-let level = createLevel(level2);
+let level = createLevel(level3);
 level.setup();

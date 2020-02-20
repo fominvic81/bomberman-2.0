@@ -1,8 +1,8 @@
 const playerSettings = {
     width: 0.9,
     height: 0.9,
-    rendWidth: 1.2,
-    rendHeight: 1.2,
+    rendWidth: 1.3,
+    rendHeight: 1.3,
     speed: 3,
     road: 'assets/player/',
     upFrames: ['player_up1.png', 'player_up2.png', 'player_up3.png', 'player_up4.png'],

@@ -38,5 +38,29 @@ const level2 = {
         [{tile:2},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:2}],
         [{tile:2},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:2}],
         [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
-    ]
+    ],
+}
+
+const level3 = {
+    tileMap: [
+        [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
+        [{tile:2},{tile:0},{tile:0},{tile:1},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:0},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2}],
+        [{tile:2},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2}],
+        [{tile:2},{tile:0},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:1},{tile:1},{tile:1},{tile:2}],
+        [{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:1},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:1},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:1},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:1},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:2}],
+        [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
+    ],
 }
