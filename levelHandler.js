@@ -14,7 +14,7 @@ const createLevel = (level) => {
         },
 
         update (dt) {
-            for (entity of this.entities) {
+            for (entity of [...this.entities]) {
                 entity.update(dt);
                 if (entity.entityName === 'player') {
                     entity.move(this.map);
@@ -48,6 +48,7 @@ const createLevel = (level) => {
         addEntity (entity) {
             entity.id = Symbol('id');
             this.entities.push(entity);
+            if (entity.init) entity.init();
         },
 
         removeEntity(id) {
