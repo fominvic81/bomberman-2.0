@@ -1,5 +1,5 @@
 
-const createBomb = (x, y) => {
+const createBomb = (x, y, power, owner = false) => {
     return {
         x: x,
         y: y,
@@ -8,6 +8,7 @@ const createBomb = (x, y) => {
         dx: 0,
         dy: 0,
         time: 0,
+        power: power,
         frameTimer: 0,
         frameCount: bombSettings.frames.length,
         frames: bombSettings.frames,
@@ -18,6 +19,7 @@ const createBomb = (x, y) => {
         rendHeight: bombSettings.rendHeight,
         life_time: bombSettings.life_time,
         entityName: 'bomb',
+        owner: owner,
 
         update (dt) {
             this.time += dt;
@@ -29,20 +31,28 @@ const createBomb = (x, y) => {
                 this.frame = this.frame % this.frameCount;
             }
 
-
-
-            
+        
+        
+        
 
 
 
             if (this.time >= this.life_time) {
-                level.addEntity(createExplos(this.x, this.y, 'center', 3));
+                if (this.owner !== false) {
+                    --this.owner.bombCount;
+                }
+                level.addEntity(createExplos(this.x, this.y, 'center', this.power));
                 level.removeEntity(this.id);
             }
         },
 
         render () {
             draw(this.frames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+        },
+
+
+        activate () {
+            this.time = this.life_time + 5;
         },
 
 

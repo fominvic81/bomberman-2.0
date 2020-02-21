@@ -1,8 +1,8 @@
 
 
 const explosSettings = {
-    width: 0.9,
-    height: 0.9,
+    width: 0.8,
+    height: 0.8,
     rendWidth: 1,
     rendHeight: 1,
     road: 'assets/explos/',
@@ -15,5 +15,5 @@ const explosSettings = {
     leftEndFrames: ['explos_left_end1.png', 'explos_left_end2.png', 'explos_left_end3.png', 'explos_left_end4.png', 'explos_left_end5.png', 'explos_left_end6.png'],
     rightFrames: ['explos_right1.png', 'explos_right2.png', 'explos_right3.png', 'explos_right4.png', 'explos_right5.png', 'explos_right6.png'],
     rightEndFrames: ['explos_right_end1.png', 'explos_right_end2.png', 'explos_right_end3.png', 'explos_right_end4.png', 'explos_right_end5.png', 'explos_right_end6.png'],
-    life_time: 0.4,
+    life_time: 0.3,
 }

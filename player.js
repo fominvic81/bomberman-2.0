@@ -27,6 +27,12 @@ const createPlayer = (x, y) => {
         rightFrames: playerSettings.rightFrames,
         frame: 0,
         putBombTimer: 10,
+        canPutBomb: false,
+        touchToBomb: false,
+        power: bonuses.flame.startCount,
+        maxBombCount: bonuses.extraBomb.startCount,
+        bombCount: 0,        
+        rollers: bonuses.rollers.startCount,
         width: playerSettings.width,
         height: playerSettings.height,
         rendWidth: playerSettings.rendWidth,
@@ -45,6 +51,13 @@ const createPlayer = (x, y) => {
                 this.frame = this.frame % this.frameCount;
             }
 
+            if (this.putBombTimer >= 0.1) {
+                this.canPutBomb = true;
+            } else {
+                this.canPutBomb = false;
+            }
+            this.speed = playerSettings.speed;
+            this.speed *= ((this.rollers - 1) / 4) + 1;
             this.dx = 0, this.dy = 0;
             if (app.key('ArrowUp')) {
                 this.dy -= this.speed * dt;
@@ -63,9 +76,12 @@ const createPlayer = (x, y) => {
                 this.dir = 'right'; 
         	}
             if (app.key(' ')) {
-                if (this.putBombTimer >= 0.2) {
-                    level.addEntity(createBomb(Math.round(this.x), Math.round(this.y)));
-                    this.putBombTimer = 0;
+                if (this.bombCount < this.maxBombCount) {
+                    if (this.canPutBomb && !this.touchToBomb) {
+                        level.addEntity(createBomb(Math.round(this.x), Math.round(this.y), this.power, this));
+                        this.putBombTimer = 0;
+                        ++this.bombCount;
+                    }
                 }
             }
 
@@ -79,6 +95,8 @@ const createPlayer = (x, y) => {
 
             this.x = this.nx;
             this.y = this.ny;
+
+            this.touchToBomb = false;
         },
 
         move (map) {
@@ -177,6 +195,10 @@ const createPlayer = (x, y) => {
                 draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
             }
         },
+
+        kill () {
+            level.removeEntity(this.id);
+        }
     }
 }
 

@@ -34,7 +34,8 @@ const createExplos = (x, y, dir, power) => {
                 let ny = this.y - i;
                 let npower = this.power - i;
                 if (!tiles[level.map[nx][ny].tile].explosResist) {
-                    level.map[nx][ny].st -= 1;
+                    // level.map[nx][ny].st -= 1;
+                    level.damageTile(nx, ny, 1);
                     npower = 0;
                     level.addEntity(createExplos(nx, ny, 'up', npower));
                     break;

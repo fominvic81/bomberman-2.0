@@ -64,6 +64,13 @@ const handleLoad = () => {
 		let road = explosSettings.road + explosSettings.rightEndFrames[i];
 		explosSettings.rightEndFrames[i] = app.img(road);
 	}
+	/////////////////////////////////////////////////////
+
+	for (bonus in bonuses) {
+		let road = bonuses[bonus].path + bonuses[bonus].sFrame;
+		bonuses[bonus].sFrame = app.img(road);
+	}
+
 };
 
 const handleStart = () => {

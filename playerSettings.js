@@ -1,6 +1,6 @@
 const playerSettings = {
-    width: 0.9,
-    height: 0.9,
+    width: 0.8,
+    height: 0.8,
     rendWidth: 1.3,
     rendHeight: 1.3,
     speed: 3,
