@@ -61,6 +61,10 @@ const level3 = {
         [{tile:2},{tile:1},{tile:1},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:2}],
         [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
         [{tile:2},{tile:1},{tile:1},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
         [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
     ],
 }

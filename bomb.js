@@ -20,8 +20,15 @@ const createBomb = (x, y, power, owner = false) => {
         life_time: bombSettings.life_time,
         entityName: 'bomb',
         owner: owner,
+        isS: false,
+
+        setup() {
+            this.isS = true;
+            level.map[this.x][this.y].hasBomb = true;
+        },
 
         update (dt) {
+            if (!this.isS) this.setup();
             this.time += dt;
             this.frameTimer += dt;
 
@@ -41,6 +48,7 @@ const createBomb = (x, y, power, owner = false) => {
                 if (this.owner !== false) {
                     --this.owner.bombCount;
                 }
+                level.map[this.x][this.y].hasBomb = false;
                 level.addEntity(createExplos(this.x, this.y, 'center', this.power));
                 level.removeEntity(this.id);
             }

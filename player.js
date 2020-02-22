@@ -7,6 +7,10 @@ function f(number, count) {
     return Math.trunc(number % l);
 }
 
+function dist(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2), 2);
+}
+
 
 //// додати можливість настроювати кнопки керування гравцем
 const createPlayer = (x, y) => {
@@ -58,7 +62,8 @@ const createPlayer = (x, y) => {
                 this.canPutBomb = false;
             }
             this.speed = playerSettings.speed;
-            this.speed *= ((this.rollers - 1) / 4) + 1;
+            // this.speed *= ((this.rollers - 1) / 4) + 1;
+            this.speed *= Math.log2(this.rollers)/2 + 1;
             this.dx = 0, this.dy = 0;
             if (app.key('ArrowUp')) {
                 this.dy -= this.speed * dt;
@@ -107,30 +112,35 @@ const createPlayer = (x, y) => {
             let speed = this.speed;
             let tlSize = 1;
             
-            const ox = this.nx;
-            const oy = this.ny;
-            this.nx += this.dx;
-            this.ny += this.dy;
+            
 
-            for (let j = Math.round(oy + 0.1 - h/2); j <= Math.round(oy-0.1+h/2); ++j) {
-                for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
-                    if (tiles[map[i][j].tile].collide) {
-                        if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
-                        if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
+            for (let u = 1; u <= speed; ++u) {
+                const ox = this.nx;
+                const oy = this.ny;
+                this.nx += this.dx / speed;
+                this.ny += this.dy / speed;
+            
+            
+                for (let j = Math.round(oy + 0.15 - h/2); j <= Math.round(oy-0.15+h/2); ++j) {
+                    for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
+                        if (tiles[map[i][j].tile].collide || (map[i][j].hasBomb && dist(ox, oy, i, j) > w/2 + 0.4999)) {
+                            if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
+                            if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
+                        }
+                        
                     }
-                    
                 }
-            }
-
-            for (let i = Math.round(ox + 0.1 - w/2); i <= Math.round(ox-0.1 + w/2); ++i) {
-                for (let j = Math.round(this.ny - h/2); j <= Math.round(this.ny + h/2); ++j) {
-                    if (tiles[map[i][j].tile].collide) {
-                        if (this.dy>0) this.ny = Math.min(this.ny, j - h/2 - 0.5);
-                        if (this.dy<0) this.ny = Math.max(this.ny, j + h/2 + 0.5);
+               
+                for (let i = Math.round(ox + 0.15 - w/2); i <= Math.round(ox-0.15 + w/2); ++i) {
+                    for (let j = Math.round(this.ny - h/2); j <= Math.round(this.ny + h/2); ++j) {
+                        if (tiles[map[i][j].tile].collide || (map[i][j].hasBomb && dist(ox, oy, i, j) > h/2 + 0.4999)) {
+                            if (this.dy>0) this.ny = Math.min(this.ny, j - h/2 - 0.5);
+                            if (this.dy<0) this.ny = Math.max(this.ny, j + h/2 + 0.5);
+                        }
+                        
                     }
-                    
                 }
-            }
+            }  
 
             // this.nx = x;
             // this.ny = y;

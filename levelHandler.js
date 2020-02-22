@@ -70,13 +70,13 @@ const createLevel = (level) => {
                     if (this.map[x][y].st <= 0) {
                         this.map[x][y].tile = 0;
                         this.map[x][y].st = 1;
-                        if (rand(15) == 0) {
+                        if (rand(25) == 0) {
                             this.addEntity(createBonus(x, y, 'flame'));
-                        } else if (rand(20) == 0) {
+                        } else if (rand(30) == 0) {
                             this.addEntity(createBonus(x, y, 'rollers'));
-                        } else if (rand(15) == 0) {
+                        } else if (rand(25) == 0) {
                             this.addEntity(createBonus(x, y, 'extraBomb'));
-                        } else if (rand(50) == 0) {
+                        } else if (rand(80) == 0) {
                             this.addEntity(createBonus(x, y, 'protect'));
                         }
                     }
@@ -121,5 +121,5 @@ const createLevel = (level) => {
     }
 }
 
-let level = createLevel(level2);
+let level = createLevel(level3);
 // level.setup();

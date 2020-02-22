@@ -1,8 +1,8 @@
 
 
 const explosSettings = {
-    width: 0.8,
-    height: 0.8,
+    width: 0.7,
+    height: 0.7,
     rendWidth: 1,
     rendHeight: 1,
     road: 'assets/explos/',
