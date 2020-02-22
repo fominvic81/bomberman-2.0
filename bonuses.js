@@ -35,4 +35,15 @@ const bonuses = {
         rendWidth: 1,
         rendHeight: 1,
     },
+    protect: {
+        path: 'assets/bonuses/protect/',
+        sFrame: 'protect.png',
+        varName: 'protect',
+        maxCount: 1,
+        startCount: 0,
+        width: 0.9,
+        height: 0.9,
+        rendWidth: 1,
+        rendHeight: 1,
+    },
 }

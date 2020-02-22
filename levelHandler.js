@@ -44,6 +44,7 @@ const createLevel = (level) => {
                             }
                         }  
                         if (entity1.entityName == 'player' && entity2.entityName == 'explos') {
+                            if (entity1.protect == 1) continue;
                             entity1.kill();
                         }
                         if (entity1.entityName == 'player' && entity2.entityName == 'bonus') {
@@ -75,7 +76,9 @@ const createLevel = (level) => {
                             this.addEntity(createBonus(x, y, 'rollers'));
                         } else if (rand(15) == 0) {
                             this.addEntity(createBonus(x, y, 'extraBomb'));
-                        } 
+                        } else if (rand(50) == 0) {
+                            this.addEntity(createBonus(x, y, 'protect'));
+                        }
                     }
                 }
             }
@@ -118,5 +121,5 @@ const createLevel = (level) => {
     }
 }
 
-let level = createLevel(level3);
+let level = createLevel(level2);
 // level.setup();
