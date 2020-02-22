@@ -12,8 +12,8 @@ function dist(x1, y1, x2, y2) {
 }
 
 
-//// додати можливість настроювати кнопки керування гравцем
-const createPlayer = (x, y) => {
+// TODO: додати можливість настроювати кнопки керування гравцем
+const createPlayer = (x, y, controls) => {
     return {
         x: x,
         y: y,
@@ -44,6 +44,7 @@ const createPlayer = (x, y) => {
         rendHeight: playerSettings.rendHeight,
         speed: playerSettings.speed,
         entityName: 'player',
+        controls: controls,
 
         update (dt) {
             this.time += dt;
@@ -65,23 +66,23 @@ const createPlayer = (x, y) => {
             // this.speed *= ((this.rollers - 1) / 4) + 1;
             this.speed *= Math.log2(this.rollers)/2 + 1;
             this.dx = 0, this.dy = 0;
-            if (app.key('ArrowUp')) {
+            if (app.key(this.controls.up)) {
                 this.dy -= this.speed * dt;
                 this.dir = 'up';
             }
-            if (app.key('ArrowDown')) {
+            if (app.key(this.controls.down)) {
                 this.dy += this.speed * dt;
                 this.dir = 'down';
             }
-        	if (app.key('ArrowLeft')) {
+        	if (app.key(this.controls.left)) {
                 this.dx -= this.speed * dt;
                 this.dir = 'left';
         	}
-        	if (app.key('ArrowRight')) {
+        	if (app.key(this.controls.right)) {
                 this.dx += this.speed * dt;
                 this.dir = 'right'; 
         	}
-            if (app.key(' ')) {
+            if (app.key(this.controls.putBomb)) {
                 if (this.bombCount < this.maxBombCount) {
                     if (this.canPutBomb && !this.touchToBomb) {
                         level.addEntity(createBomb(Math.round(this.x), Math.round(this.y), this.power, this));
@@ -112,7 +113,6 @@ const createPlayer = (x, y) => {
             let speed = this.speed;
             let tlSize = 1;
             
-            
 
             for (let u = 1; u <= speed; ++u) {
                 const ox = this.nx;
@@ -120,10 +120,11 @@ const createPlayer = (x, y) => {
                 this.nx += this.dx / speed;
                 this.ny += this.dy / speed;
             
-            
+	            const disablex = map[Math.floor(ox + 0.1)][Math.round(oy)].hasBomb
+			    || map[Math.ceil(ox - 0.1)][Math.round(oy)].hasBomb;
                 for (let j = Math.round(oy + 0.15 - h/2); j <= Math.round(oy-0.15+h/2); ++j) {
                     for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
-                        if (tiles[map[i][j].tile].collide || (map[i][j].hasBomb && dist(ox, oy, i, j) > w/2 + 0.4999)) {
+                        if ((tiles[map[i][j].tile].collide || (!disablex && map[i][j].hasBomb))/* && this.touchToW.get(i*10000 + j) === undefined*/) {
                             if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
                             if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
                         }
@@ -131,9 +132,11 @@ const createPlayer = (x, y) => {
                     }
                 }
                
+                const disabley = map[Math.round(ox)][Math.floor(oy + 0.1)].hasBomb
+                || map[Math.round(ox)][Math.ceil(oy - 0.1)].hasBomb;
                 for (let i = Math.round(ox + 0.15 - w/2); i <= Math.round(ox-0.15 + w/2); ++i) {
                     for (let j = Math.round(this.ny - h/2); j <= Math.round(this.ny + h/2); ++j) {
-                        if (tiles[map[i][j].tile].collide || (map[i][j].hasBomb && dist(ox, oy, i, j) > h/2 + 0.4999)) {
+                        if ((tiles[map[i][j].tile].collide || (!disabley && map[i][j].hasBomb))) {
                             if (this.dy>0) this.ny = Math.min(this.ny, j - h/2 - 0.5);
                             if (this.dy<0) this.ny = Math.max(this.ny, j + h/2 + 0.5);
                         }
@@ -235,4 +238,4 @@ const createPlayer = (x, y) => {
 }
 
 const player = createPlayer(1, 1);
-level.addEntity(player);
+// level.addEntity(player);

@@ -17,6 +17,9 @@ const level1  = {
         [{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1}],
         [{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1},{tile:1}],
     ],
+    startEntities: [
+        {name: 'player', x: 1, y: 1, controls: controls.player1},
+    ],
 }
 
 const level2 = {
@@ -39,14 +42,17 @@ const level2 = {
         [{tile:2},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:2}],
         [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
     ],
+    startEntities: [
+        {name: 'player', x: 1, y: 1, controls: controls.player1},
+    ],
 }
 
 const level3 = {
     tileMap: [
         [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
-        [{tile:2},{tile:0},{tile:0},{tile:1},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:0},{tile:1},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:1},{tile:0},{tile:0},{tile:2}],
         [{tile:2},{tile:0},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
-        [{tile:2},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:2}],
         [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:0},{tile:2},{tile:0},{tile:2}],
         [{tile:2},{tile:1},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
         [{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2}],
@@ -62,9 +68,15 @@ const level3 = {
         [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
         [{tile:2},{tile:1},{tile:1},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:2}],
         [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
-        [{tile:2},{tile:1},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:1},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:1},{tile:2}],
         [{tile:2},{tile:0},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:1},{tile:2},{tile:0},{tile:2}],
-        [{tile:2},{tile:0},{tile:1},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:2}],
+        [{tile:2},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:0},{tile:0},{tile:1},{tile:0},{tile:0},{tile:2}],
         [{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2},{tile:2}],
+    ],
+    startEntities: [
+        {name: 'player', x: 21, y: 13, controls: controls.player2},
+        {name: 'player', x: 1, y: 1, controls: controls.player1},
+        {name: 'bomb', x: 3, y: 3, power: 3},
+        {name: 'bonus', x: 1, y: 2, bonusName: 'protect'},
     ],
 }

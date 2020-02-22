@@ -15,14 +15,26 @@ const createLevel = (level) => {
     return {
         
         map: level.tileMap,
+        startEntities: level.startEntities,
         entities: [],
         isS: false,
 
         setup () {
-            isS = true;
+            this.isS = true;
             for (let x = 0; x < this.map.length; ++x) {
                 for (let y = 0; y < this.map[x].length; ++y) {
                     this.map[x][y].st = tiles[this.map[x][y].tile].maxSt;
+                }
+            }
+            for (entity of this.startEntities) {
+                if (entity.name == 'player') {
+                    this.addEntity(createPlayer(entity.x, entity.y, entity.controls));
+                }
+                if (entity.name == 'bomb') {
+                    this.addEntity(createBomb(entity.x, entity.y, entity.power));
+                }
+                if (entity.name == 'bonus') {
+                    this.addEntity(createBonus(entity.x, entity.y, entity.bonusName));
                 }
             }
         },
