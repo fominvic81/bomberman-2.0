@@ -20,11 +20,11 @@ const createIceCream = (x, y) => {
         speed: iceCreamSettings.speed,
 
         canMoveTo (x, y) {
+            if (level.map[x][y].hasBomb == true) {
+                return false;
+            }
             if (!tiles[level.map[x][y].tile].collide) {
                 return true;
-            }
-            if (level.map[x][y].hasBomb != true) {
-                return false;
             }
             return false;
         },
