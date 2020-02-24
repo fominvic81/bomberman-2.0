@@ -11,3 +11,4 @@ const playerSettings = {
     rightFrames: ['player_right1.png', 'player_right2.png', 'player_right3.png', 'player_right4.png'],
 
 }
+

@@ -70,6 +70,12 @@ const handleLoad = () => {
 		let road = bonuses[bonus].path + bonuses[bonus].sFrame;
 		bonuses[bonus].sFrame = app.img(road);
 	}
+	/////////////////////////////////////////////////////
+
+	for (let i = 0; i < iceCreamSettings.frames.length; ++i) {
+		let road = iceCreamSettings.road + iceCreamSettings.frames[i];
+		iceCreamSettings.frames[i] = app.img(road);
+	}
 
 };
 

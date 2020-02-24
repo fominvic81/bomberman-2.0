@@ -1,29 +1,34 @@
-function isCollide(e1, e2) {
-    if (e1.x < e2.x + e2.width/2 + e2.width/2 &&
-        e1.x + e1.width/2 + e2.width/2 > e2.x &&
-        e1.y < e2.y + e2.height/2 + e2.height/2 &&
-        e1.y + e1.height/2 + e2.height/2 > e2.y) {
-        return true;
-     }
-}
-
-function rand(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
 
 const createLevel = (level) => {
     return {
         
         map: level.tileMap,
         startEntities: level.startEntities,
+        bonuses: level.bonuses,
         entities: [],
         isS: false,
 
         setup () {
             this.isS = true;
+            let twchb = [];
             for (let x = 0; x < this.map.length; ++x) {
                 for (let y = 0; y < this.map[x].length; ++y) {
+                    this.map[x][y] = {tile: this.map[x][y]};
                     this.map[x][y].st = tiles[this.map[x][y].tile].maxSt;
+                    if (tiles[this.map[x][y].tile].canHasBonus) {
+                        twchb.push({x: x, y: y});
+                    }
+                }
+            }
+            for (bonus in this.bonuses) {
+                if (twchb.length == 0) break;
+                for (let i = 1; i <= this.bonuses[bonus]; ++i) {
+                    if (twchb.length == 0) break;
+                    console.log(bonus);
+                    let j = rand(twchb.length);
+                    let cord = twchb[j];
+                    this.map[cord.x][cord.y].bonus = bonus;
+                    twchb.splice(j, 1);
                 }
             }
             for (entity of this.startEntities) {
@@ -35,6 +40,10 @@ const createLevel = (level) => {
                 }
                 if (entity.name == 'bonus') {
                     this.addEntity(createBonus(entity.x, entity.y, entity.bonusName));
+                }
+                if (entity.name == 'explos') {
+                    this.addEntity(createExplos(entity.x, entity.y, entity.dir, entity.power));
+                    console.log('+');
                 }
             }
         },
@@ -82,14 +91,17 @@ const createLevel = (level) => {
                     if (this.map[x][y].st <= 0) {
                         this.map[x][y].tile = 0;
                         this.map[x][y].st = 1;
-                        if (rand(25) == 0) {
-                            this.addEntity(createBonus(x, y, 'flame'));
-                        } else if (rand(30) == 0) {
-                            this.addEntity(createBonus(x, y, 'rollers'));
-                        } else if (rand(25) == 0) {
-                            this.addEntity(createBonus(x, y, 'extraBomb'));
-                        } else if (rand(80) == 0) {
-                            this.addEntity(createBonus(x, y, 'protect'));
+                        // if (rand(25) == 0) {
+                        //     this.addEntity(createBonus(x, y, 'flame'));
+                        // } else if (rand(30) == 0) {
+                        //     this.addEntity(createBonus(x, y, 'rollers'));
+                        // } else if (rand(25) == 0) {
+                        //     this.addEntity(createBonus(x, y, 'extraBomb'));
+                        // } else if (rand(80) == 0) {
+                        //     this.addEntity(createBonus(x, y, 'protect'));
+                        // }
+                        if (this.map[x][y].bonus !== undefined) {
+                            this.addEntity(createBonus(x, y, this.map[x][y].bonus));
                         }
                     }
                 }

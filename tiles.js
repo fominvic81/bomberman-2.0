@@ -8,6 +8,7 @@ const tiles = {
         collide: false,
         explosResist: true,
         maxSt: 1,
+        canHasBonus: false,
     },
 
     1: {
@@ -16,6 +17,7 @@ const tiles = {
         collide: true,
         explosResist: false,
         maxSt: 1,
+        canHasBonus: true,
     },
 
     2: {
@@ -24,6 +26,7 @@ const tiles = {
         collide: true,
         explosResist: false,
         maxSt: Infinity,
+        canHasBonus: false,
     }
 
 }

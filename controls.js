@@ -12,6 +12,6 @@ const controls = {
         down: 's',
         left: 'a',
         right: 'd',
-        putBomb: 'Shift',
+        putBomb: 'c',
     },
 }

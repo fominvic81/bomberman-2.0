@@ -8,7 +8,7 @@ function f(number, count) {
 }
 
 function dist(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2), 2);
+    return /*Math.sqrt(*/Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)/*, 2)*/;
 }
 
 
@@ -45,6 +45,7 @@ const createPlayer = (x, y, controls) => {
         speed: playerSettings.speed,
         entityName: 'player',
         controls: controls,
+        touchToB: new Map(),
 
         update (dt) {
             this.time += dt;
@@ -55,6 +56,10 @@ const createPlayer = (x, y, controls) => {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
+            }
+
+            for (ttb of this.touchToB.keys()) {
+                this.touchToB.set(ttb, this.touchToB.get(ttb) - dt);
             }
 
             if (this.putBombTimer >= 0.1) {
@@ -120,11 +125,17 @@ const createPlayer = (x, y, controls) => {
                 this.nx += this.dx / speed;
                 this.ny += this.dy / speed;
             
-	            const disablex = map[Math.floor(ox + 0.1)][Math.round(oy)].hasBomb
-			    || map[Math.ceil(ox - 0.1)][Math.round(oy)].hasBomb;
+	            // const disablex = map[Math.floor(ox + 0.12)][Math.round(oy)].hasBomb
+			    // || map[Math.ceil(ox - 0.12)][Math.round(oy)].hasBomb;
                 for (let j = Math.round(oy + 0.15 - h/2); j <= Math.round(oy-0.15+h/2); ++j) {
                     for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
-                        if ((tiles[map[i][j].tile].collide || (!disablex && map[i][j].hasBomb))/* && this.touchToW.get(i*10000 + j) === undefined*/) {
+                        if (dist(ox, oy, i, j) < Math.pow(w/2 + 0.5, 2)) {
+                            this.touchToB.set(i*10000+j, 0.1);
+                        }
+                        // if (this.touchToB.get(i*10000+j) <= 0) {
+                        //     this.touchToB.delete(i*10000+j);
+                        // }
+                        if ((tiles[map[i][j].tile].collide || (/*!disablex && */map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
                             if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
                             if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
                         }
@@ -132,92 +143,22 @@ const createPlayer = (x, y, controls) => {
                     }
                 }
                
-                const disabley = map[Math.round(ox)][Math.floor(oy + 0.1)].hasBomb
-                || map[Math.round(ox)][Math.ceil(oy - 0.1)].hasBomb;
+                // const disabley = map[Math.round(ox)][Math.floor(oy + 0.12)].hasBomb
+                // || map[Math.round(ox)][Math.ceil(oy - 0.12)].hasBomb;
                 for (let i = Math.round(ox + 0.15 - w/2); i <= Math.round(ox-0.15 + w/2); ++i) {
                     for (let j = Math.round(this.ny - h/2); j <= Math.round(this.ny + h/2); ++j) {
-                        if ((tiles[map[i][j].tile].collide || (!disabley && map[i][j].hasBomb))) {
+                        if (dist(ox, oy, i, j) < Math.pow(h/2 + 0.5, 2)) {
+                            this.touchToB.set(i*10000+j, 0.1);
+                        }
+                        if ((tiles[map[i][j].tile].collide || (/*!disabley && */map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
                             if (this.dy>0) this.ny = Math.min(this.ny, j - h/2 - 0.5);
                             if (this.dy<0) this.ny = Math.max(this.ny, j + h/2 + 0.5);
-                        }
-                        
+                        }         
                     }
                 }
             }  
-
-            // this.nx = x;
-            // this.ny = y;
-        
-            // for (let i = 1; i <= speed; ++i) {
-            //     x += this.dx / speed;
-            //     y += this.dy / speed;
-        
-            //     this.nx = x;
-            //     this.ny = y;
-        
-            //     step = h / count - 0.01;
-        
-            //     for (let i = 0 - count / 2; i <= count / 2; ++i) {
-            //         let cord = [(x - w/2) / tlSize + 0.5, (y - h/2 + i * step - (tlSize - h) / 2) / tlSize + 1];
-            //         if (tiles[map[Math.floor(cord[0])][Math.floor(cord[1])].tile].collide) {
-            //             if (tiles[map[Math.floor(cord[0]) + 1][Math.floor(cord[1])].tile].collide == 0) { 
-            //                 if (f(cord[0], 2) > 100 - ice) {
-            //                     this.nx = Math.ceil(cord[0]) * tlSize - (tlSize - w) / 2;
-            //                 }
-            //             } else if (f(cord[0], 2) > 94) {
-            //                 this.nx = Math.ceil(cord[0]) * tlSize  - (tlSize - w) / 2;
-            //             }
-            //         }
-            //     }
-        
-            //     for (let i = 0 - count / 2; i <= count / 2; ++i) {
-            //         let cord = [(x - w/2 - (tlSize - w)) / tlSize + 0.5, (y - h/2 + i * step - (tlSize - h) / 2) / tlSize + 1];
-            //         if (tiles[map[Math.ceil(cord[0])][Math.floor(cord[1])].tile].collide != 0) {
-            //             if (tiles[map[Math.ceil(cord[0]) - 1][Math.floor(cord[1])].tile].collide == 0) { 
-            //                 if (f(cord[0], 2) < ice) {
-            //                     this.nx = Math.floor(cord[0]) * tlSize + (tlSize - w) / 2;
-            //                 }
-            //             } else if (f(cord[0], 2) < 6) {
-            //                 this.nx = Math.floor(cord[0]) * tlSize  + (tlSize - w) / 2;
-            //             }
-            //         }
-            //     }
-        
-            //     step = w / count - 0.01;
-        
-            //     for (let i = 0 - count / 2; i <= count / 2; ++i) {
-            //         let cord = [(x - w/2 + i * step - (tlSize - w) / 2 - 0) / tlSize + 1, (y - h/2) / tlSize + 0.5];
-            //         if ((tiles[map[Math.floor(cord[0])][Math.floor(cord[1])].tile].collide != 0)) {
-            //             if (tiles[map[Math.floor(cord[0])][Math.floor(cord[1]) + 1].tile].collide == 0) {
-            //                 if (f(cord[1], 2) > 100 - ice) {
-            //                     this.ny = (Math.ceil(cord[1])) * tlSize - (tlSize - h) / 2;     
-            //                 }    
-            //             } else if (f(cord[1], 2) > 94) {
-            //                 this.ny = (Math.ceil(cord[1])) * tlSize - (tlSize - h) / 2;
-            //             }
-            //         } 
-            //     }
-                
-            //     for (let i = 0 - count / 2; i <= count / 2; ++i) {
-            //         let cord = [(x - w/2 + i * step - (tlSize - w) / 2 - 0) / tlSize + 1, (y - h/2 - (tlSize - h)) / tlSize + 0.5];
-            //         if ((tiles[map[Math.floor(cord[0])][Math.ceil(cord[1])].tile].collide != 0)) {
-            //             if (tiles[map[Math.floor(cord[0])][Math.ceil(cord[1]) - 1].tile].collide == 0) {
-            //                 if (f(cord[1], 2) < ice) {
-            //                     this.ny = (Math.floor(cord[1])) * tlSize + (tlSize - h) / 2;     
-            //                 }    
-            //             } else if (f(cord[1], 2) < 6) {
-            //                 this.ny = (Math.floor(cord[1])) * tlSize + (tlSize - h) / 2;
-            //             }
-            //         } 
-            //     }
-        
-            //     x = this.nx;
-            //     y = this.ny;     
-            // }
-            // return {x: this.nx, y: this.ny};
         },
         
-
         render () {
             // draw(playerSettings.image, this.x, this.y, this.width, this.height);
             if (this.dir == 'down') {
