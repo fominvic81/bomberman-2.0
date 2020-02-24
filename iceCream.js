@@ -42,10 +42,10 @@ const createIceCream = (x, y) => {
             this.x += this.dx;
             this.y += this.dy;
 
-            if (Math.abs(this.nx - this.x) < this.dx) {
+            if (Math.abs(this.nx - this.x) < this.dx/1.5) {
                 this.x = this.nx;
             }
-            if (Math.abs(this.ny - this.y) < this.dy) {
+            if (Math.abs(this.ny - this.y) < this.dy/1.5) {
                 this.y = this.ny;
             }
             
