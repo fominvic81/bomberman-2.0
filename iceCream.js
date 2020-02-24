@@ -7,7 +7,7 @@ const createIceCream = (x, y) => {
         ny: Math.round(y),
         dx: 0,
         dy: 0,
-        dir: 'up',
+        dir: 'rand',
         time: 0,
         frameTimer: 0,
         frame: 0,
@@ -50,6 +50,12 @@ const createIceCream = (x, y) => {
             }
             
             if (this.x == this.nx && this.y == this.ny) {
+                if ((!this.canMoveTo(this.x, this.y - 1))
+                 && (!this.canMoveTo(this.x, this.y + 1))
+                 && (!this.canMoveTo(this.x - 1, this.y))
+                 && (!this.canMoveTo(this.x + 1, this.y))) {
+                     this.dir = 'rand';
+                 }
                 if (this.dir == 'rand') {
                     if (this.canMoveTo(this.x, this.y - 1)) {
                         this.dir = 'up';
