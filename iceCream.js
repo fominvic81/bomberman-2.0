@@ -42,10 +42,10 @@ const createIceCream = (x, y) => {
             this.x += this.dx;
             this.y += this.dy;
 
-            if (Math.abs(this.nx - this.x) < this.dx/1.5) {
+            if (Math.abs(this.nx - this.x) < this.dx) {
                 this.x = this.nx;
             }
-            if (Math.abs(this.ny - this.y) < this.dy/1.5) {
+            if (Math.abs(this.ny - this.y) < this.dy) {
                 this.y = this.ny;
             }
             
@@ -152,5 +152,5 @@ const createIceCream = (x, y) => {
 
 
 level.addEntity(createIceCream(3, 3));
-level.addEntity(createIceCream(7, 4));
+level.addEntity(createIceCream(7, 1));
 level.addEntity(createIceCream(5, 5));

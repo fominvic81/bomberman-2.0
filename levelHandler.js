@@ -145,5 +145,5 @@ const createLevel = (level) => {
     }
 }
 
-let level = createLevel(level3);
+let level = createLevel(level2);
 // level.setup();
