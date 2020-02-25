@@ -50,12 +50,6 @@ const createIceCream = (x, y) => {
             }
             
             if (this.x == this.nx && this.y == this.ny) {
-                if ((!this.canMoveTo(this.x, this.y - 1))
-                 && (!this.canMoveTo(this.x, this.y + 1))
-                 && (!this.canMoveTo(this.x - 1, this.y))
-                 && (!this.canMoveTo(this.x + 1, this.y))) {
-                     this.dir = 'rand';
-                 }
                 if (this.dir == 'rand') {
                     if (this.canMoveTo(this.x, this.y - 1)) {
                         this.dir = 'up';
@@ -69,45 +63,53 @@ const createIceCream = (x, y) => {
                 }
                 if (this.dir == 'up') {
                     if (!this.canMoveTo(this.x, this.y - 1)) {
-                        this.dir = 'down';
                         if (this.canMoveTo(this.x - 1, this.y) && rand(8) == 0) {
                             this.dir = 'left';
-                        }
-                        if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
+                        } else if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
                             this.dir = 'right';
+                        } else if (this.canMoveTo(this.x, this.y + 1)) {
+                            this.dir = 'down';
+                        } else {
+                            this.dir = 'rand';
                         }
                     }
                 }
                 if (this.dir == 'down') {
                     if (!this.canMoveTo(this.x, this.y + 1)) {
-                        this.dir = 'up';
                         if (this.canMoveTo(this.x - 1, this.y) && rand(8) == 0) {
                             this.dir = 'left';
-                        }
-                        if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
+                        } else if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
                             this.dir = 'right';
+                        } else if (this.canMoveTo(this.x, this.y - 1)) {
+                            this.dir = 'up';
+                        } else {
+                            this.dir = 'rand';
                         }
                     }
                 }
                 if (this.dir == 'left') {
                     if (!this.canMoveTo(this.x - 1, this.y)) {
-                        this.dir = 'right';
                         if (this.canMoveTo(this.x, this.y - 1) && rand(8) == 0) {
                             this.dir = 'up';
-                        }
-                        if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
+                        } else if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
                             this.dir = 'down';
+                        } else if (this.canMoveTo(this.x + 1, this.y)) {
+                            this.dir = 'right';
+                        } else {
+                            this.dir = 'rand';
                         }
                     }
                 }
                 if (this.dir == 'right') {
                     if (!this.canMoveTo(this.x + 1, this.y)) {
-                        this.dir = 'left';
                         if (this.canMoveTo(this.x, this.y - 1) && rand(8) == 0) {
                             this.dir = 'up';
-                        }
-                        if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
+                        } else if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
                             this.dir = 'down';
+                        } else if (this.canMoveTo(this.x - 1, this.y)) {
+                            this.dir = 'left';
+                        } else {
+                            this.dir = 'rand';
                         }
                     }
                 }
