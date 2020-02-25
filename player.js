@@ -126,17 +126,12 @@ const createPlayer = (x, y, controls) => {
                 this.nx += this.dx / speed;
                 this.ny += this.dy / speed;
             
-	            // const disablex = map[Math.floor(ox + 0.12)][Math.round(oy)].hasBomb
-			    // || map[Math.ceil(ox - 0.12)][Math.round(oy)].hasBomb;
-                for (let j = Math.round(oy + 0.15 - h/2); j <= Math.round(oy-0.15+h/2); ++j) {
+                for (let j = Math.round(oy + 0.01 - h/2); j <= Math.round(oy-0.01+h/2); ++j) {
                     for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
                         if (dist(ox, oy, i, j) < Math.pow(w/2 + 0.5, 2)) {
                             this.touchToB.set(i*10000+j, 0.1);
                         }
-                        // if (this.touchToB.get(i*10000+j) <= 0) {
-                        //     this.touchToB.delete(i*10000+j);
-                        // }
-                        if ((tiles[map[i][j].tile].collide || (/*!disablex && */map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
+                        if ((tiles[map[i][j].tile].collide || (map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
                             if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
                             if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
                         }
@@ -144,14 +139,12 @@ const createPlayer = (x, y, controls) => {
                     }
                 }
                
-                // const disabley = map[Math.round(ox)][Math.floor(oy + 0.12)].hasBomb
-                // || map[Math.round(ox)][Math.ceil(oy - 0.12)].hasBomb;
-                for (let i = Math.round(ox + 0.15 - w/2); i <= Math.round(ox-0.15 + w/2); ++i) {
+                for (let i = Math.round(ox + 0.01 - w/2); i <= Math.round(ox-0.01 + w/2); ++i) {
                     for (let j = Math.round(this.ny - h/2); j <= Math.round(this.ny + h/2); ++j) {
                         if (dist(ox, oy, i, j) < Math.pow(h/2 + 0.5, 2)) {
                             this.touchToB.set(i*10000+j, 0.1);
                         }
-                        if ((tiles[map[i][j].tile].collide || (/*!disabley && */map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
+                        if ((tiles[map[i][j].tile].collide || (map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
                             if (this.dy>0) this.ny = Math.min(this.ny, j - h/2 - 0.5);
                             if (this.dy<0) this.ny = Math.max(this.ny, j + h/2 + 0.5);
                         }         
@@ -161,7 +154,6 @@ const createPlayer = (x, y, controls) => {
         },
 
         render () {
-            // draw(playerSettings.image, this.x, this.y, this.width, this.height);
             if (this.dir == 'down') {
                 draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
             } else if (this.dir == 'up') {

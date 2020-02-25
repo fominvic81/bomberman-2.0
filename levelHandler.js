@@ -14,7 +14,9 @@ const createLevel = (level) => {
             let twchb = [];
             for (let x = 0; x < this.map.length; ++x) {
                 for (let y = 0; y < this.map[x].length; ++y) {
-                    this.map[x][y] = {tile: this.map[x][y]};
+                    if (this.map[x][y].tile === undefined) {
+                        this.map[x][y] = {tile: this.map[x][y]};
+                    }
                     this.map[x][y].st = tiles[this.map[x][y].tile].maxSt;
                     if (tiles[this.map[x][y].tile].canHasBonus) {
                         twchb.push({x: x, y: y});
@@ -169,5 +171,3 @@ const createLevel = (level) => {
 }
 
 let level = createLevel(level3);
-
-// level.addAnimation(createAnimation(3, 3, 1, 1, bombSettings.frames, 10));
