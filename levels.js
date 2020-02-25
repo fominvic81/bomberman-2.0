@@ -79,6 +79,7 @@ const level3 = {
         {name: 'iceCream', x: 7, y: 1},
         {name: 'iceCream', x: 5, y: 5},
         {name: 'iceCream', x: 13, y: 3},
+        {name: 'bonus', x: 2, y: 1, bonusName: 'protect'}
     ],
     bonuses: {
         flame: 3,

@@ -84,6 +84,14 @@ const handleLoad = () => {
 		let road = iceCreamSettings.road + iceCreamSettings.deadFrames[i];
 		iceCreamSettings.deadFrames[i] = app.img(road);
 	}
+	//////////////////////////////////////////////////////
+
+	for (anim in animations) {
+		for (let i = 0; i < animations[anim].frames.length; ++i) {
+			let road = animations[anim].road + animations[anim].frames[i];
+			animations[anim].frames[i] = app.img(road);
+		}
+	}
 
 };
 

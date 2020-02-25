@@ -23,6 +23,7 @@ const createBonus = (x, y, bonusName) => {
         },
 
         kill () {
+            level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, animations.flame.frames, 0.5));
             level.removeEntity(this.id);
         },
     }
