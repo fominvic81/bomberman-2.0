@@ -13,11 +13,13 @@ const createIceCream = (x, y) => {
         frame: 0,
         frameCount: iceCreamSettings.frames.length,
         frames: iceCreamSettings.frames,
+        deadFrames: iceCreamSettings.deadFrames,
         width: iceCreamSettings.width,
         height: iceCreamSettings.height,
         rendWidth: iceCreamSettings.rendWidth,
         rendHeight: iceCreamSettings.rendHeight,
         speed: iceCreamSettings.speed,
+        entityName: 'enemy',
 
         canMoveTo (x, y) {
             if (level.map[x][y].hasBomb == true) {
@@ -147,10 +149,11 @@ const createIceCream = (x, y) => {
             draw(this.frames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
         },
 
+
+        kill () {
+            level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, this.deadFrames, 0.5));
+            level.removeEntity(this.id);
+        }
+
     }
 }
-
-
-level.addEntity(createIceCream(3, 3));
-level.addEntity(createIceCream(7, 1));
-level.addEntity(createIceCream(5, 5));

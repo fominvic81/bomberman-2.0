@@ -29,6 +29,7 @@ const createPlayer = (x, y, controls) => {
         downFrames: playerSettings.downFrames,
         leftFrames: playerSettings.leftFrames,
         rightFrames: playerSettings.rightFrames,
+        deadFrames: playerSettings.deadFrames,
         frame: 0,
         putBombTimer: 10,
         canPutBomb: false,
@@ -158,7 +159,7 @@ const createPlayer = (x, y, controls) => {
                 }
             }  
         },
-        
+
         render () {
             // draw(playerSettings.image, this.x, this.y, this.width, this.height);
             if (this.dir == 'down') {
@@ -173,6 +174,7 @@ const createPlayer = (x, y, controls) => {
         },
 
         kill () {
+            level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, this.deadFrames, 0.5))
             level.removeEntity(this.id);
         }
     }

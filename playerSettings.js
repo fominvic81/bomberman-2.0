@@ -9,6 +9,7 @@ const playerSettings = {
     downFrames: ['player_down1.png', 'player_down2.png', 'player_down3.png', 'player_down4.png'],
     leftFrames: ['player_left1.png', 'player_left2.png', 'player_left3.png', 'player_left4.png'],
     rightFrames: ['player_right1.png', 'player_right2.png', 'player_right3.png', 'player_right4.png'],
+    deadFrames: ['player_dead1.png', 'player_dead2.png', 'player_dead3.png'],
 
 }
 

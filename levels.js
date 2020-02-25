@@ -75,7 +75,10 @@ const level3 = {
     startEntities: [
         {name: 'player', x: 21, y: 13, controls: controls.player2},
         {name: 'player', x: 1, y: 1, controls: controls.player1},
-        // {name: 'bonus', x: 1, y: 2, bonusName: 'protect'},
+        {name: 'iceCream', x: 3, y: 3},
+        {name: 'iceCream', x: 7, y: 1},
+        {name: 'iceCream', x: 5, y: 5},
+        {name: 'iceCream', x: 13, y: 3},
     ],
     bonuses: {
         flame: 3,

@@ -6,6 +6,7 @@ const createLevel = (level) => {
         startEntities: level.startEntities,
         bonuses: level.bonuses,
         entities: [],
+        animations: [],
         isS: false,
 
         setup () {
@@ -43,7 +44,9 @@ const createLevel = (level) => {
                 }
                 if (entity.name == 'explos') {
                     this.addEntity(createExplos(entity.x, entity.y, entity.dir, entity.power));
-                    console.log('+');
+                }
+                if (entity.name == 'iceCream') {
+                    this.addEntity(createIceCream(entity.x, entity.y));
                 }
             }
         },
@@ -79,11 +82,21 @@ const createLevel = (level) => {
                                 entity1.kill();
                             }
                         }
+                        if (entity1.entityName == 'enemy' && entity2.entityName == 'explos') {
+                            entity1.kill();
+                        }
+                        if (entity1.entityName == 'enemy' && entity2.entityName == 'player') {
+                            entity2.kill();
+                        }
                     }
                 }
                 if (entity1.entityName === 'player') {
                     entity1.move(this.map);
                 }
+            }
+            
+            for (anim of this.animations) {
+                anim.update(dt);
             }
 
             for (let x = 0; x < this.map.length; ++x) {
@@ -91,15 +104,6 @@ const createLevel = (level) => {
                     if (this.map[x][y].st <= 0) {
                         this.map[x][y].tile = 0;
                         this.map[x][y].st = 1;
-                        // if (rand(25) == 0) {
-                        //     this.addEntity(createBonus(x, y, 'flame'));
-                        // } else if (rand(30) == 0) {
-                        //     this.addEntity(createBonus(x, y, 'rollers'));
-                        // } else if (rand(25) == 0) {
-                        //     this.addEntity(createBonus(x, y, 'extraBomb'));
-                        // } else if (rand(80) == 0) {
-                        //     this.addEntity(createBonus(x, y, 'protect'));
-                        // }
                         if (this.map[x][y].bonus !== undefined) {
                             this.addEntity(createBonus(x, y, this.map[x][y].bonus));
                         }
@@ -118,6 +122,9 @@ const createLevel = (level) => {
 
             for (entity of this.entities) {
                 entity.render();
+            }
+            for (anim of this.animations) {
+                anim.render();
             }
 
         },
@@ -140,10 +147,27 @@ const createLevel = (level) => {
                     break;
                 }
             }
-        }
+        },
+
+        addAnimation (anim) {
+            anim.id = Symbol('id');
+            this.animations.push(anim);
+        },
+
+        removeAnimation (id) {
+            for (let i = 0; i < this.animations.length; ++i) {
+                let anim = this.animations[i];
+                if (anim.id === id) {
+                    this.animations.splice(i, 1);
+                    break;
+                }
+            }
+        },
+
         
     }
 }
 
-let level = createLevel(level2);
-// level.setup();
+let level = createLevel(level3);
+
+// level.addAnimation(createAnimation(3, 3, 1, 1, bombSettings.frames, 10));

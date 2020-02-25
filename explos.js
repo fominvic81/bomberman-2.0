@@ -86,19 +86,7 @@ const createExplos = (x, y, dir, power) => {
             if (!this.spread) {
                 this.spread = true;
                 if (this.dir == 'center') {
-                    // level.addEntity(createExplos(this.x, this.y - 1, 'up', this.power - 1))
-                    // level.addEntity(createExplos(this.x, this.y + 1, 'down', this.power - 1))
-                    // level.addEntity(createExplos(this.x - 1, this.y, 'left', this.power - 1))
-                    // level.addEntity(createExplos(this.x + 1, this.y, 'right', this.power - 1))
                     this.spreadExplos();
-                // } else if (this.dir == 'up') {
-                    // level.addEntity(createExplos(this.x, this.y - 1, this.dir, this.power - 1))
-                // } else if (this.dir == 'down') {
-                    // level.addEntity(createExplos(this.x, this.y + 1, this.dir, this.power - 1))
-                // } else if (this.dir == 'left') {
-                    // level.addEntity(createExplos(this.x - 1, this.y, this.dir, this.power - 1))
-                // } else if (this.dir == 'right') {
-                    // level.addEntity(createExplos(this.x + 1, this.y, this.dir, this.power - 1))
                 }
             }
 
@@ -118,7 +106,6 @@ const createExplos = (x, y, dir, power) => {
         },
 
         render () {
-            // draw(explosSettings.image, this.x, this.y, this.width, this.height);
             if (this.dir == 'center') {
                 draw(this.centerFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
             } else if (this.dir == 'up') {

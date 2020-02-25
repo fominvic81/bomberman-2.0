@@ -27,6 +27,10 @@ const handleLoad = () => {
 		let road = playerSettings.road + playerSettings.rightFrames[i];
 		playerSettings.rightFrames[i] = app.img(road);
 	}
+	for (let i = 0; i < playerSettings.deadFrames.length; ++i) {
+		let road = playerSettings.road + playerSettings.deadFrames[i];
+		playerSettings.deadFrames[i] = app.img(road);
+	}
 	// explosSettings.image = app.img(explosSettings.image);
 	for (let i = 0; i < explosSettings.centerFrames.length; ++i) {
 		let road = explosSettings.road + explosSettings.centerFrames[i];
@@ -75,6 +79,10 @@ const handleLoad = () => {
 	for (let i = 0; i < iceCreamSettings.frames.length; ++i) {
 		let road = iceCreamSettings.road + iceCreamSettings.frames[i];
 		iceCreamSettings.frames[i] = app.img(road);
+	}
+	for (let i = 0; i < iceCreamSettings.deadFrames.length; ++i) {
+		let road = iceCreamSettings.road + iceCreamSettings.deadFrames[i];
+		iceCreamSettings.deadFrames[i] = app.img(road);
 	}
 
 };
