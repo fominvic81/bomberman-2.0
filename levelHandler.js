@@ -81,7 +81,7 @@ const createLevel = (level) => {
                         }
                         if (entity1.entityName == 'bonus' && entity2.entityName == 'explos') {
                             if (entity1.time > entity2.life_time) {
-                                entity1.kill();
+                                entity1.kill(true);
                             }
                         }
                         if (entity1.entityName == 'enemy' && entity2.entityName == 'explos') {
