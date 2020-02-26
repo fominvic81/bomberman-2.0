@@ -101,9 +101,9 @@ const createWorm = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(2) == 0))) {
+                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(3) != 1))) {
                         this.dir = 'left';
-                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(2) == 0))) {
+                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(3) != 1))) {
                         this.dir = 'right';
                     }
                 } else if (this.dir == 'down') {
@@ -114,9 +114,9 @@ const createWorm = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(2) == 0))) {
+                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(3) != 1))) {
                         this.dir = 'left';
-                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(2) == 0))) {
+                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(3) != 1))) {
                         this.dir = 'right';
                     }
                 } else if (this.dir == 'left') {
@@ -127,9 +127,9 @@ const createWorm = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(2) == 0))) {
+                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(3) != 1))) {
                         this.dir = 'up';
-                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(2) == 0))) {
+                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(3) != 1))) {
                         this.dir = 'down';
                     }
                 } else if (this.dir == 'right') {
@@ -140,9 +140,9 @@ const createWorm = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(2) == 0))) {
+                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(3) != 1))) {
                         this.dir = 'up';
-                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(2) == 0))) {
+                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(3) != 1))) {
                         this.dir = 'down';
                     }
                 }
