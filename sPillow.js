@@ -1,5 +1,5 @@
 
-const createIceCream = (x, y) => {
+const createSPillow = (x, y) => {
     return {
         x: x,
         y: y,
@@ -11,14 +11,14 @@ const createIceCream = (x, y) => {
         time: 0,
         frameTimer: 0,
         frame: 0,
-        frameCount: iceCreamSettings.frames.length,
-        frames: iceCreamSettings.frames,
-        deadFrames: iceCreamSettings.deadFrames,
-        width: iceCreamSettings.width,
-        height: iceCreamSettings.height,
-        rendWidth: iceCreamSettings.rendWidth,
-        rendHeight: iceCreamSettings.rendHeight,
-        speed: iceCreamSettings.speed,
+        frameCount: sPillowSettings.frames.length,
+        frames: sPillowSettings.frames,
+        deadFrames: sPillowSettings.deadFrames,
+        width: sPillowSettings.width,
+        height: sPillowSettings.height,
+        rendWidth: sPillowSettings.rendWidth,
+        rendHeight: sPillowSettings.rendHeight,
+        speed: sPillowSettings.speed,
         entityName: 'enemy',
 
         canMoveTo (x, y) {
@@ -35,7 +35,7 @@ const createIceCream = (x, y) => {
             this.time += dt;
             this.frameTimer += dt;
 
-            if (this.frameTimer > 0.5) {
+            if (this.frameTimer > 1) {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
@@ -65,51 +65,66 @@ const createIceCream = (x, y) => {
                 }
                 if (this.dir == 'up') {
                     if (!this.canMoveTo(this.x, this.y - 1)) {
-                        if (this.canMoveTo(this.x - 1, this.y) && rand(8) == 0) {
-                            this.dir = 'left';
-                        } else if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
-                            this.dir = 'right';
-                        } else if (this.canMoveTo(this.x, this.y + 1)) {
+                        if (this.canMoveTo(this.x, this.y + 1)) {
                             this.dir = 'down';
                         } else {
                             this.dir = 'rand';
                         }
                     }
-                } else if (this.dir == 'down') {
+                    if (this.canMoveTo(this.x - 1, this.y) && rand(3) == 0) {
+                        this.dir = 'left';
+                    } else if (this.canMoveTo(this.x + 1, this.y) && rand(3) == 0) {
+                        this.dir = 'right';
+                    } else if (this.canMoveTo(this.x, this.y + 1) && rand(12) == 0) {
+                        this.dir = 'down';
+                    }
+                }
+                if (this.dir == 'down') {
                     if (!this.canMoveTo(this.x, this.y + 1)) {
-                        if (this.canMoveTo(this.x - 1, this.y) && rand(8) == 0) {
-                            this.dir = 'left';
-                        } else if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
-                            this.dir = 'right';
-                        } else if (this.canMoveTo(this.x, this.y - 1)) {
+                        if (this.canMoveTo(this.x, this.y - 1)) {
                             this.dir = 'up';
                         } else {
                             this.dir = 'rand';
                         }
                     }
-                } else if (this.dir == 'left') {
+                    if (this.canMoveTo(this.x - 1, this.y) && rand(3) == 0) {
+                        this.dir = 'left';
+                    } else if (this.canMoveTo(this.x + 1, this.y) && rand(3) == 0) {
+                        this.dir = 'right';
+                    } else if (this.canMoveTo(this.x, this.y - 1) && rand(12) == 0) {
+                        this.dir = 'up';
+                    }
+                }
+                if (this.dir == 'left') {
                     if (!this.canMoveTo(this.x - 1, this.y)) {
-                        if (this.canMoveTo(this.x, this.y - 1) && rand(8) == 0) {
-                            this.dir = 'up';
-                        } else if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
-                            this.dir = 'down';
-                        } else if (this.canMoveTo(this.x + 1, this.y)) {
+                        if (this.canMoveTo(this.x + 1, this.y)) {
                             this.dir = 'right';
                         } else {
                             this.dir = 'rand';
                         }
                     }
-                } else if (this.dir == 'right') {
+                    if (this.canMoveTo(this.x, this.y - 1) && rand(3) == 0) {
+                        this.dir = 'up';
+                    } else if (this.canMoveTo(this.x, this.y + 1) && rand(3) == 0) {
+                        this.dir = 'down';
+                    } else if (this.canMoveTo(this.x + 1, this.y) && rand(12) == 0) {
+                        this.dir = 'right';
+                    }
+                }
+                if (this.dir == 'right') {
                     if (!this.canMoveTo(this.x + 1, this.y)) {
-                        if (this.canMoveTo(this.x, this.y - 1) && rand(8) == 0) {
-                            this.dir = 'up';
-                        } else if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
-                            this.dir = 'down';
-                        } else if (this.canMoveTo(this.x - 1, this.y)) {
+                        if (this.canMoveTo(this.x - 1, this.y)) {
                             this.dir = 'left';
                         } else {
                             this.dir = 'rand';
                         }
+                    }
+                    if (this.canMoveTo(this.x, this.y - 1) && rand(3) == 0) {
+                        this.dir = 'up';
+                    } else if (this.canMoveTo(this.x, this.y + 1) && rand(3) == 0) {
+                        this.dir = 'down';
+                    } else if (this.canMoveTo(this.x - 1, this.y) && rand(12) == 0) {
+                        this.dir = 'left';
                     }
                 }
                 

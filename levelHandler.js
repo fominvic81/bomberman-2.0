@@ -50,6 +50,12 @@ const createLevel = (level) => {
                 if (entity.name == 'iceCream') {
                     this.addEntity(createIceCream(entity.x, entity.y));
                 }
+                if (entity.name == 'pillow') {
+                    this.addEntity(createPillow(entity.x, entity.y));
+                }
+                if (entity.name == 'sPillow') {
+                    this.addEntity(createSPillow(entity.x, entity.y));
+                }
             }
         },
 

@@ -86,6 +86,26 @@ const handleLoad = () => {
 	}
 	//////////////////////////////////////////////////////
 
+	for (let i = 0; i < pillowSettings.frames.length; ++i) {
+		let road = pillowSettings.road + pillowSettings.frames[i];
+		pillowSettings.frames[i] = app.img(road);
+	}
+	for (let i = 0; i < pillowSettings.deadFrames.length; ++i) {
+		let road = pillowSettings.road + pillowSettings.deadFrames[i];
+		pillowSettings.deadFrames[i] = app.img(road);
+	}
+	//////////////////////////////////////////////////////
+
+	for (let i = 0; i < sPillowSettings.frames.length; ++i) {
+		let road = sPillowSettings.road + sPillowSettings.frames[i];
+		sPillowSettings.frames[i] = app.img(road);
+	}
+	for (let i = 0; i < sPillowSettings.deadFrames.length; ++i) {
+		let road = sPillowSettings.road + sPillowSettings.deadFrames[i];
+		sPillowSettings.deadFrames[i] = app.img(road);
+	}
+	//////////////////////////////////////////////////////
+
 	for (anim in animations) {
 		for (let i = 0; i < animations[anim].frames.length; ++i) {
 			let road = animations[anim].road + animations[anim].frames[i];
