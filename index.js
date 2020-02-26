@@ -106,6 +106,16 @@ const handleLoad = () => {
 	}
 	//////////////////////////////////////////////////////
 
+	for (let i = 0; i < wormSettings.frames.length; ++i) {
+		let road = wormSettings.road + wormSettings.frames[i];
+		wormSettings.frames[i] = app.img(road);
+	}
+	for (let i = 0; i < wormSettings.deadFrames.length; ++i) {
+		let road = wormSettings.road + wormSettings.deadFrames[i];
+		wormSettings.deadFrames[i] = app.img(road);
+	}
+	//////////////////////////////////////////////////////
+
 	for (anim in animations) {
 		for (let i = 0; i < animations[anim].frames.length; ++i) {
 			let road = animations[anim].road + animations[anim].frames[i];

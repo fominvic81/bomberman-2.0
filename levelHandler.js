@@ -36,25 +36,28 @@ const createLevel = (level) => {
             }
             for (entity of this.startEntities) {
                 if (entity.name == 'player') {
-                    this.addEntity(createPlayer(entity.x, entity.y, entity.controls));
+                    this.addEntity(createPlayer(this, entity.x, entity.y, entity.controls));
                 }
                 if (entity.name == 'bomb') {
-                    this.addEntity(createBomb(entity.x, entity.y, entity.power));
+                    this.addEntity(createBomb(this, entity.x, entity.y, entity.power));
                 }
                 if (entity.name == 'bonus') {
-                    this.addEntity(createBonus(entity.x, entity.y, entity.bonusName));
+                    this.addEntity(createBonus(this, entity.x, entity.y, entity.bonusName));
                 }
                 if (entity.name == 'explos') {
-                    this.addEntity(createExplos(entity.x, entity.y, entity.dir, entity.power));
+                    this.addEntity(createExplos(this, entity.x, entity.y, entity.dir, entity.power));
                 }
                 if (entity.name == 'iceCream') {
-                    this.addEntity(createIceCream(entity.x, entity.y));
+                    this.addEntity(createIceCream(this, entity.x, entity.y));
                 }
                 if (entity.name == 'pillow') {
-                    this.addEntity(createPillow(entity.x, entity.y));
+                    this.addEntity(createPillow(this, entity.x, entity.y));
                 }
                 if (entity.name == 'sPillow') {
-                    this.addEntity(createSPillow(entity.x, entity.y));
+                    this.addEntity(createSPillow(this, entity.x, entity.y));
+                }
+                if (entity.name == 'worm') {
+                    this.addEntity(createWorm(this, entity.x, entity.y));
                 }
             }
         },
@@ -113,7 +116,7 @@ const createLevel = (level) => {
                         this.map[x][y].tile = 0;
                         this.map[x][y].st = 1;
                         if (this.map[x][y].bonus !== undefined) {
-                            this.addEntity(createBonus(x, y, this.map[x][y].bonus));
+                            this.addEntity(createBonus(this, x, y, this.map[x][y].bonus));
                         }
                     }
                 }

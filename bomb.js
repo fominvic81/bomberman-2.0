@@ -1,6 +1,7 @@
 
-const createBomb = (x, y, power, owner = false) => {
+const createBomb = (level, x, y, power, owner = false) => {
     return {
+        level: level,
         x: x,
         y: y,
         nx: x,
@@ -24,7 +25,7 @@ const createBomb = (x, y, power, owner = false) => {
 
         setup() {
             this.isS = true;
-            level.map[this.x][this.y].hasBomb = true;
+            this.level.map[this.x][this.y].hasBomb = true;
         },
 
         update (dt) {
@@ -48,9 +49,9 @@ const createBomb = (x, y, power, owner = false) => {
                 if (this.owner !== false) {
                     --this.owner.bombCount;
                 }
-                level.map[this.x][this.y].hasBomb = false;
-                level.addEntity(createExplos(this.x, this.y, 'center', this.power));
-                level.removeEntity(this.id);
+                this.level.map[this.x][this.y].hasBomb = false;
+                this.level.addEntity(createExplos(this.level, this.x, this.y, 'center', this.power));
+                this.level.removeEntity(this.id);
             }
         },
 
@@ -67,5 +68,5 @@ const createBomb = (x, y, power, owner = false) => {
     };
 }
 
-// level.addEntity(createBomb(4, 5));
-// level.addEntity(createBomb(5, 4));
+// this.level.addEntity(createBomb(4, 5));
+// this.level.addEntity(createBomb(5, 4));

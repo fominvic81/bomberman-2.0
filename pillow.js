@@ -1,6 +1,7 @@
 
-const createPillow = (x, y) => {
+const createPillow = (level, x, y) => {
     return {
+        level: level,
         x: x,
         y: y,
         nx: Math.round(x),
@@ -22,10 +23,10 @@ const createPillow = (x, y) => {
         entityName: 'enemy',
 
         canMoveTo (x, y) {
-            if (level.map[x][y].hasBomb == true) {
+            if (this.level.map[x][y].hasBomb == true) {
                 return false;
             }
-            if (!tiles[level.map[x][y].tile].collide) {
+            if (!tiles[this.level.map[x][y].tile].collide) {
                 return true;
             }
             return false;
@@ -152,8 +153,8 @@ const createPillow = (x, y) => {
 
 
         kill () {
-            level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, this.deadFrames, 0.5));
-            level.removeEntity(this.id);
+            this.level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, this.deadFrames, 0.5));
+            this.level.removeEntity(this.id);
         }
 
     }

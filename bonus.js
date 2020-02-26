@@ -1,7 +1,8 @@
 
 
-const createBonus = (x, y, bonusName) => {
+const createBonus = (level, x, y, bonusName) => {
     return { 
+        level: level,
         x: x,
         y: y,
         time: 0,
@@ -24,9 +25,9 @@ const createBonus = (x, y, bonusName) => {
 
         kill (flame = false) {
             if (flame) {
-                level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, animations.flame.frames, 0.5));
+                this.level.addAnimation(createAnimation(this.x, this.y, this.rendWidth, this.rendHeight, animations.flame.frames, 0.5));
             }
-            level.removeEntity(this.id);
+            this.level.removeEntity(this.id);
         },
     }
 }

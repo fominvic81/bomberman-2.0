@@ -1,5 +1,5 @@
 
-const createIceCream = (level, x, y) => {
+const createWorm = (level, x, y) => {
     return {
         level: level,
         x: x,
@@ -12,14 +12,14 @@ const createIceCream = (level, x, y) => {
         time: 0,
         frameTimer: 0,
         frame: 0,
-        frameCount: iceCreamSettings.frames.length,
-        frames: iceCreamSettings.frames,
-        deadFrames: iceCreamSettings.deadFrames,
-        width: iceCreamSettings.width,
-        height: iceCreamSettings.height,
-        rendWidth: iceCreamSettings.rendWidth,
-        rendHeight: iceCreamSettings.rendHeight,
-        speed: iceCreamSettings.speed,
+        frameCount: wormSettings.frames.length,
+        frames: wormSettings.frames,
+        deadFrames: wormSettings.deadFrames,
+        width: wormSettings.width,
+        height: wormSettings.height,
+        rendWidth: wormSettings.rendWidth,
+        rendHeight: wormSettings.rendHeight,
+        speed: wormSettings.speed,
         entityName: 'enemy',
 
         canMoveTo (x, y) {
@@ -32,19 +32,37 @@ const createIceCream = (level, x, y) => {
             return false;
         },
 
+        findPlayer () {
+            let pl = {x: 0, y: 0, dist: Infinity};
+            for (entity of this.level.entities) {
+                if (entity.entityName == 'player') {
+                    let d = dist(this.x, this.y, entity.x, entity.y);
+                    if (pl.dist >= d) {
+                        pl.dist = d;
+                        pl.x = entity.x;
+                        pl.y = entity.y;
+                    }
+                }
+            }
+            if (pl.dist == Infinity) {
+                return;
+            }
+            return {x: pl.x, y: pl.y};
+        },
+
         update (dt) {
             this.time += dt;
             this.frameTimer += dt;
-
-            if (this.frameTimer > 0.5) {
+            
+            if (this.frameTimer > 1) {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
             }
-
+            
             this.x += this.dx;
             this.y += this.dy;
-
+            
             if (Math.abs(this.nx - this.x) < this.dx) {
                 this.x = this.nx;
             }
@@ -53,6 +71,17 @@ const createIceCream = (level, x, y) => {
             }
             
             if (this.x == this.nx && this.y == this.ny) {
+                let c = this.findPlayer();
+                let plx = 'left';
+                let ply = 'up';
+                if (c !== undefined) {
+                    if (c.x > this.x) {
+                        plx = 'right';
+                    }
+                    if (c.y > this.y) {
+                        ply = 'down';
+                    }
+                }
                 if (this.dir == 'rand') {
                     if (this.canMoveTo(this.x, this.y - 1)) {
                         this.dir = 'up';
@@ -66,51 +95,55 @@ const createIceCream = (level, x, y) => {
                 }
                 if (this.dir == 'up') {
                     if (!this.canMoveTo(this.x, this.y - 1)) {
-                        if (this.canMoveTo(this.x - 1, this.y) && rand(8) == 0) {
-                            this.dir = 'left';
-                        } else if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
-                            this.dir = 'right';
-                        } else if (this.canMoveTo(this.x, this.y + 1)) {
+                        if (this.canMoveTo(this.x, this.y + 1)) {
                             this.dir = 'down';
                         } else {
                             this.dir = 'rand';
                         }
+                    }
+                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(2) == 0))) {
+                        this.dir = 'left';
+                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(2) == 0))) {
+                        this.dir = 'right';
                     }
                 } else if (this.dir == 'down') {
                     if (!this.canMoveTo(this.x, this.y + 1)) {
-                        if (this.canMoveTo(this.x - 1, this.y) && rand(8) == 0) {
-                            this.dir = 'left';
-                        } else if (this.canMoveTo(this.x + 1, this.y) && rand(8) == 0) {
-                            this.dir = 'right';
-                        } else if (this.canMoveTo(this.x, this.y - 1)) {
+                        if (this.canMoveTo(this.x, this.y - 1)) {
                             this.dir = 'up';
                         } else {
                             this.dir = 'rand';
                         }
+                    }
+                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(2) == 0))) {
+                        this.dir = 'left';
+                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(2) == 0))) {
+                        this.dir = 'right';
                     }
                 } else if (this.dir == 'left') {
                     if (!this.canMoveTo(this.x - 1, this.y)) {
-                        if (this.canMoveTo(this.x, this.y - 1) && rand(8) == 0) {
-                            this.dir = 'up';
-                        } else if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
-                            this.dir = 'down';
-                        } else if (this.canMoveTo(this.x + 1, this.y)) {
+                        if (this.canMoveTo(this.x + 1, this.y)) {
                             this.dir = 'right';
                         } else {
                             this.dir = 'rand';
                         }
                     }
+                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(2) == 0))) {
+                        this.dir = 'up';
+                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(2) == 0))) {
+                        this.dir = 'down';
+                    }
                 } else if (this.dir == 'right') {
                     if (!this.canMoveTo(this.x + 1, this.y)) {
-                        if (this.canMoveTo(this.x, this.y - 1) && rand(8) == 0) {
-                            this.dir = 'up';
-                        } else if (this.canMoveTo(this.x, this.y + 1) && rand(8) == 0) {
-                            this.dir = 'down';
-                        } else if (this.canMoveTo(this.x - 1, this.y)) {
+                        if (this.canMoveTo(this.x - 1, this.y)) {
                             this.dir = 'left';
                         } else {
                             this.dir = 'rand';
                         }
+                    }
+                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(2) == 0))) {
+                        this.dir = 'up';
+                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(2) == 0))) {
+                        this.dir = 'down';
                     }
                 }
                 
