@@ -83,7 +83,9 @@ const level3 = {
         {name: 'pillow', x: 15, y: 1},
         {name: 'pillow', x: 14, y: 3},
         {name: 'sPillow', x: 13, y: 1},
+        {name: 'sPillow', x: 15, y: 3},
         {name: 'sPillow', x: 5, y: 8},
+        {name: 'worm', x: 16, y: 3},
         {name: 'worm', x: 5, y: 5},
         {name: 'worm', x: 3, y: 3},
         // {name: 'bonus', x: 2, y: 1, bonusName: 'protect'}

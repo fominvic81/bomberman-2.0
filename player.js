@@ -66,7 +66,6 @@ const createPlayer = (level, x, y, controls) => {
                 this.canPutBomb = false;
             }
             this.speed = playerSettings.speed;
-
             this.speed *= Math.log2(this.rollers)/3 + 1;
             this.dx = 0, this.dy = 0;
             if (app.key(this.controls.up)) {
@@ -168,6 +167,3 @@ const createPlayer = (level, x, y, controls) => {
         }
     }
 }
-
-const player = createPlayer(1, 1);
-// this.level.addEntity(player);
