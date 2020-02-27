@@ -59,6 +59,9 @@ const createLevel = (level) => {
                 if (entity.name == 'worm') {
                     this.addEntity(createWorm(this, entity.x, entity.y));
                 }
+                if (entity.name == 'head') {
+                    this.addEntity(createHead(this, entity.x, entity.y));
+                }
             }
         },
 
@@ -179,4 +182,4 @@ const createLevel = (level) => {
     }
 }
 
-let level = createLevel(level3);
+let level = createLevel(level4);
