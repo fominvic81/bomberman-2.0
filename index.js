@@ -126,6 +126,16 @@ const handleLoad = () => {
 	}
 	//////////////////////////////////////////////////////
 
+	for (let i = 0; i < tripodSettings.frames.length; ++i) {
+		let road = tripodSettings.road + tripodSettings.frames[i];
+		tripodSettings.frames[i] = app.img(road);
+	}
+	for (let i = 0; i < tripodSettings.deadFrames.length; ++i) {
+		let road = tripodSettings.road + tripodSettings.deadFrames[i];
+		tripodSettings.deadFrames[i] = app.img(road);
+	}
+	//////////////////////////////////////////////////////
+
 	for (anim in animations) {
 		for (let i = 0; i < animations[anim].frames.length; ++i) {
 			let road = animations[anim].road + animations[anim].frames[i];

@@ -1,5 +1,5 @@
 
-const createHead = (level, x, y) => {
+const createTripod = (level, x, y) => {
     return {
         level: level,
         x: x,
@@ -12,14 +12,14 @@ const createHead = (level, x, y) => {
         time: 0,
         frameTimer: 0,
         frame: 0,
-        frameCount: headSettings.frames.length,
-        frames: headSettings.frames,
-        deadFrames: headSettings.deadFrames,
-        width: headSettings.width,
-        height: headSettings.height,
-        rendWidth: headSettings.rendWidth,
-        rendHeight: headSettings.rendHeight,
-        speed: headSettings.speed,
+        frameCount: tripodSettings.frames.length,
+        frames: tripodSettings.frames,
+        deadFrames: tripodSettings.deadFrames,
+        width: tripodSettings.width,
+        height: tripodSettings.height,
+        rendWidth: tripodSettings.rendWidth,
+        rendHeight: tripodSettings.rendHeight,
+        speed: tripodSettings.speed,
         entityName: 'enemy',
 
         canMoveTo (x, y) {
@@ -27,6 +27,9 @@ const createHead = (level, x, y) => {
                 return false;
             }
             if (!tiles[this.level.map[x][y].tile].collide) {
+                return true;
+            }
+            if (tiles[this.level.map[x][y].tile].collideLevel <= 1) {
                 return true;
             }
             return false;
@@ -54,7 +57,7 @@ const createHead = (level, x, y) => {
             this.time += dt;
             this.frameTimer += dt;
             
-            if (this.frameTimer > 0.75) {
+            if (this.frameTimer > 0.3) {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
@@ -101,9 +104,9 @@ const createHead = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(3) != 0))) {
+                    if (this.canMoveTo(this.x - 1, this.y) && (rand(8) == 0 || (plx == 'left' && rand(2) == 0))) {
                         this.dir = 'left';
-                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(3) != 0))) {
+                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(8) == 0 || (plx == 'right' && rand(2) == 0))) {
                         this.dir = 'right';
                     }
                 } else if (this.dir == 'down') {
@@ -114,9 +117,9 @@ const createHead = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x - 1, this.y) && (rand(12) == 0 || (plx == 'left' && rand(3) != 0))) {
+                    if (this.canMoveTo(this.x - 1, this.y) && (rand(8) == 0 || (plx == 'left' && rand(2) == 0))) {
                         this.dir = 'left';
-                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(12) == 0 || (plx == 'right' && rand(3) != 0))) {
+                    } else if (this.canMoveTo(this.x + 1, this.y) && (rand(8) == 0 || (plx == 'right' && rand(2) == 0))) {
                         this.dir = 'right';
                     }
                 } else if (this.dir == 'left') {
@@ -127,9 +130,9 @@ const createHead = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(3) != 0))) {
+                    if (this.canMoveTo(this.x, this.y - 1) && (rand(8) == 0 || (ply == 'up' && rand(2) == 0))) {
                         this.dir = 'up';
-                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(3) != 0))) {
+                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(8) == 0 || (ply == 'down' && rand(2) == 0))) {
                         this.dir = 'down';
                     }
                 } else if (this.dir == 'right') {
@@ -140,9 +143,9 @@ const createHead = (level, x, y) => {
                             this.dir = 'rand';
                         }
                     }
-                    if (this.canMoveTo(this.x, this.y - 1) && (rand(12) == 0 || (ply == 'up' && rand(3) != 0))) {
+                    if (this.canMoveTo(this.x, this.y - 1) && (rand(8) == 0 || (ply == 'up' && rand(2) == 0))) {
                         this.dir = 'up';
-                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(12) == 0 || (ply == 'down' && rand(3) != 0))) {
+                    } else if (this.canMoveTo(this.x, this.y + 1) && (rand(8) == 0 || (ply == 'down' && rand(2) == 0))) {
                         this.dir = 'down';
                     }
                 }

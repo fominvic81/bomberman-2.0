@@ -8,7 +8,7 @@ function f(number, count) {
 }
 
 
-// TODO: додати можливість настроювати кнопки керування гравцем
+// TODO:
 const createPlayer = (level, x, y, controls) => {
     return {
         level: level,

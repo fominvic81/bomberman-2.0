@@ -4,6 +4,8 @@ function isCollide(e1, e2) {
         e1.y < e2.y + e2.height/2 + e2.height/2 &&
         e1.y + e1.height/2 + e2.height/2 > e2.y) {
         return true;
+     } else {
+         return false;
      }
 }
 

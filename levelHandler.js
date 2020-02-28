@@ -62,6 +62,9 @@ const createLevel = (level) => {
                 if (entity.name == 'head') {
                     this.addEntity(createHead(this, entity.x, entity.y));
                 }
+                if (entity.name == 'tripod') {
+                    this.addEntity(createTripod(this, entity.x, entity.y));
+                }
             }
         },
 
