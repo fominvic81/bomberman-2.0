@@ -136,6 +136,16 @@ const handleLoad = () => {
 	}
 	//////////////////////////////////////////////////////
 
+	for (let i = 0; i < batSettings.frames.length; ++i) {
+		let road = batSettings.road + batSettings.frames[i];
+		batSettings.frames[i] = app.img(road);
+	}
+	for (let i = 0; i < batSettings.deadFrames.length; ++i) {
+		let road = batSettings.road + batSettings.deadFrames[i];
+		batSettings.deadFrames[i] = app.img(road);
+	}
+	//////////////////////////////////////////////////////
+
 	for (anim in animations) {
 		for (let i = 0; i < animations[anim].frames.length; ++i) {
 			let road = animations[anim].road + animations[anim].frames[i];
