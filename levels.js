@@ -133,7 +133,8 @@ const level4 = {
         {name: 'head', x: 8, y: 6},
         {name: 'head', x: 8, y: 6},
         {name: 'tripod', x: 8, y: 6},
-        {name: 'bat', x: 8, y: 6},
+        {name: 'bat', x: 9, y: 6},
+        {name: 'snake', x: 9, y: 6, length: 15},
     ],
     bonuses: {
         flame: 4,

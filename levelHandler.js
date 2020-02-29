@@ -68,6 +68,9 @@ const createLevel = (level) => {
                 if (entity.name == 'bat') {
                     this.addEntity(createBat(this, entity.x, entity.y));
                 }
+                if (entity.name == 'snake') {
+                    this.addEntity(createSnake(this, entity.x, entity.y, entity.length));
+                }
             }
         },
 

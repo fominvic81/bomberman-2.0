@@ -146,6 +146,14 @@ const handleLoad = () => {
 	}
 	//////////////////////////////////////////////////////
 
+	for (frame in snakeSettings.frames) {
+		for (let i = 0; i < snakeSettings.frames[frame].length; ++i) {
+			let road = snakeSettings.road + snakeSettings.frames[frame][i];
+			snakeSettings.frames[frame][i] = app.img(road);
+		}
+	}
+	//////////////////////////////////////////////////////
+
 	for (anim in animations) {
 		for (let i = 0; i < animations[anim].frames.length; ++i) {
 			let road = animations[anim].road + animations[anim].frames[i];
@@ -194,4 +202,4 @@ ctx = app.layer().ctx;
 dbg = app.layer({ global: true }).ctx;
 
 app.start();
-app.setCustomTps(30);
+// app.setCustomTps(300);

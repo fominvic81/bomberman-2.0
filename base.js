@@ -101,6 +101,10 @@ const initApp = ({
 
 		data.fps = Math.round(1 / dt);
 
+		if (customTps === undefined) {
+			update();
+		}
+
 		for (const layer of layers) {
 			if (layer.opts.global) continue;
 
@@ -111,10 +115,6 @@ const initApp = ({
 			handleRender();
 		} catch (e) {
 			console.error(e);
-		}
-
-		if (customTps === undefined) {
-			update();
 		}
 
 		requestAnimationFrame(frame);
