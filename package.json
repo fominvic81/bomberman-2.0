@@ -1,0 +1,21 @@
+{
+  "name": "bomberman-2.0",
+  "version": "1.0.0",
+  "repository": "git@github.com:fominvic81/bomberman-2.0.git",
+  "author": "fominvic81 <fomin.vic81@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "serve": "webpack-dev-server --open",
+    "prod": "webpack --mode production"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
