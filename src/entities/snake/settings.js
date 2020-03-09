@@ -7,7 +7,7 @@ export default {
     height: 0.4,
     rendWidth: 1,
     rendHeight: 1.5,
-    speed: 2,
+    speed: 0.5,
     frames: {
         dead: img(['snake_dead1.png', 'snake_dead2.png', 'snake_dead3.png', 'snake_dead4.png', 'snake_dead5.png', 'snake_dead6.png']),
         headUp: img(['snake_head_up.png']),

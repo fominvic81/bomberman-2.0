@@ -131,12 +131,12 @@ export const level4 = {
     startEntities: [
         {name: 'player', x: 21, y: 13, controls: controls.player2},
         {name: 'player', x: 1, y: 1, controls: controls.player1},
-        {name: 'head', x: 8, y: 6},
-        {name: 'head', x: 8, y: 6},
-        {name: 'head', x: 8, y: 6},
-        {name: 'tripod', x: 8, y: 6},
-        {name: 'bat', x: 9, y: 6},
-        {name: 'snake', x: 9, y: 6, length: 15},
+        // {name: 'head', x: 8, y: 6},
+        // {name: 'head', x: 8, y: 6},
+        // {name: 'head', x: 8, y: 6},
+        // {name: 'tripod', x: 8, y: 6},
+        // {name: 'bat', x: 9, y: 6},
+        {name: 'snake', x: 9, y: 11, length: 15},
     ],
     bonuses: {
         flame: 4,
