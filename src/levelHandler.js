@@ -7,9 +7,10 @@ import { createIceCream } from './entities/ice-cream';
 import { createPillow } from './entities/pillow';
 import { createPlayer } from './entities/player';
 import { createSPillow } from './entities/s-pillow';
-import { createSnake } from './entities/snake';
 import { createTripod } from './entities/tripod';
 import { createWorm } from './entities/worm';
+import { createSnake } from './entities/snake';
+import { createQueen } from './entities/queen';
 import { rand, isCollide } from './common';
 import { draw } from './drawing';
 import tiles from './tiles';
@@ -84,6 +85,9 @@ export const createLevel = level => {
                 if (entity.name === 'snake') {
                     this.addEntity(createSnake(this, entity.x, entity.y, entity.length));
                 }
+                if (entity.name === 'queen') {
+                    this.addEntity(createQueen(this, entity.x, entity.y));
+                }
             }
         },
 
@@ -118,7 +122,7 @@ export const createLevel = level => {
                             entity2.kill();
                         }
                         if (entity1.entityName === 'bonus' && entity2.entityName === 'explos') {
-                            if (entity1.time > entity2.life_time) {
+                            if (entity1.time > entity2.life_time + 0.05) {
                                 entity1.kill(true);
                             }
                         }

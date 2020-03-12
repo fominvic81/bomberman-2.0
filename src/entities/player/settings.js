@@ -5,8 +5,8 @@ const img = imgLoader('assets/player');
 export default {
     width: 0.8,
     height: 0.8,
-    rendWidth: 1.3,
-    rendHeight: 1.3,
+    rendWidth: 1.6,
+    rendHeight: 1.6,
     speed: 3,
     upFrames: img(['player_up1.png', 'player_up2.png', 'player_up3.png', 'player_up4.png']),
     downFrames: img(['player_down1.png', 'player_down2.png', 'player_down3.png', 'player_down4.png']),
