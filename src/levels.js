@@ -137,6 +137,7 @@ export const level4 = {
         // {name: 'tripod', x: 8, y: 6},
         // {name: 'bat', x: 9, y: 6},
         {name: 'snake', x: 9, y: 11, length: 15},
+        {name: 'queen', x: 9, y: 11},
     ],
     bonuses: {
         flame: 4,

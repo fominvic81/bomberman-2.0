@@ -1,5 +1,4 @@
 import { dist, rand } from '../../common';
-import animations from '../../animations';
 import { draw, createAnimation } from '../../drawing';
 import tiles from '../../tiles';
 
@@ -89,10 +88,10 @@ export const createSnake = (level, x, y, length) => {
                     }
                 }
                 this.dc -= 1;
+                
                 let p = new Map();
                 p.set(this.cords[0].x * 10000 + this.cords[0].y, 0);
                 let s = [{x: this.cords[0].x, y: this.cords[0].y}];
-
 
                 let addS = (i, j, ni, nj) => {
                     let t = p.get(i * 10000 + j) + 1;
@@ -114,36 +113,32 @@ export const createSnake = (level, x, y, length) => {
                     addS(i, j, i - 1, j);
                     addS(i, j, i + 1, j);
                     
-                    console.log(`x: ${i}, y: ${j} = ${p.get(i * 10000 + i)}`);
+                    //console.log(`x: ${i}, y: ${j} = ${p.get(i * 10000 + i)}`);
                 }
-
+                
                 let t = this.findPlayer();
                 let d = 'up';
 
                 if (p.get(Math.round(t.x) * 10000 + Math.round(t.y)) !== undefined) {
-                    for (let i = Math.round(t.x), j = Math.round(t.y); i !== this.cords[0].x && j !== this.cords[0].y;) {
+                    for (let i = Math.round(t.x), j = Math.round(t.y); i !== this.cords[0].x || j !== this.cords[0].y;) {
                         if (p.get(i * 10000 + j - 1) === p.get(i * 10000 + j) - 1) {
-                            d = 'up';
-                            console.log('u');
+                            d = 'down';
                             j -= 1;
                         } else if (p.get(i * 10000 + j + 1) === p.get(i * 10000 + j) - 1) {
-                            d = 'down';
-                            console.log('d');
+                            d = 'up';
                             j += 1;
                         } else if (p.get((i - 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
-                            d = 'left';
-                            console.log('l');
+                            d = 'right';
                             i -= 1;
                         } else if (p.get((i + 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
-                            d = 'right';
-                            console.log('r');
+                            d = 'left';
                             i += 1;
                         }
                     }
                 }
 
                 this.cords[0].dir = d;
-
+                
             }
             
             this.dc += this.speed * dt;
