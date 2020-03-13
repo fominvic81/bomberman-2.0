@@ -3,8 +3,8 @@ import { imgLoader } from '../../load';
 const img = imgLoader('assets/bosses/snake');
 
 export default {
-    width: 0.4,
-    height: 0.4,
+    width: 1,
+    height: 1,
     rendWidth: 1,
     rendHeight: 1.5,
     speed: 1,

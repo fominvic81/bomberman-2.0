@@ -10,9 +10,11 @@ export const createSnake = (level, x, y, length) => {
         level: level,
         x: x,
         y: y,
-        dc: 0,
-        cords: [],
+        dc: 1,
+        segments: [],
+        segSt: 1,
         time: 0,
+        resistTimer: 0,
         frameTimer: 0,
         frameCount: 4,
         frame: 0,
@@ -21,6 +23,7 @@ export const createSnake = (level, x, y, length) => {
         rendWidth: settings.rendWidth,
         rendHeight: settings.rendHeight,
         speed: settings.speed,
+        canMove: true,
         entityName: 'snake',
         length: length,
         isS: false,
@@ -35,28 +38,26 @@ export const createSnake = (level, x, y, length) => {
             return false;
         },
 
-        findPlayer () {
-            let pl = {x: 0, y: 0, dist: Infinity};
+        findPlayers () {
+            let pl = [];
             for (const entity of this.level.entities) {
-                if (entity.entityName == 'player') {
-                    let d = dist(this.cords[0].x, this.cords[0].y, entity.x, entity.y);
-                    if (pl.dist >= d) {
-                        pl.dist = d;
-                        pl.x = entity.x;
-                        pl.y = entity.y;
-                    }
+                if (entity.entityName === 'player') {
+                    let d = dist(this.segments[0].x, this.segments[0].y, entity.x, entity.y);
+                    pl.push({x: entity.x, y: entity.y, dist: d});
                 }
             }
-            if (pl.dist == Infinity) {
+            if (pl.length === 0) {
                 return;
             }
-            return {x: pl.x, y: pl.y};
+            pl.sort((a, b) => a.dist > b.dist ? 1 : -1)
+
+            return pl;
         },
 
         setup () {
             this.isS = true;
             for (let i = 1; i <= this.length; ++i) {
-                this.cords.push({x: this.x, y: this.y+i, dir: 'up'});
+                this.segments.push({x: this.x, y: this.y + 1, dir: 'up', move: i - 1});
             }
         },
 
@@ -65,33 +66,38 @@ export const createSnake = (level, x, y, length) => {
 
             this.time += dt;
             this.frameTimer += dt;
+            this.resistTimer += dt;
 
             if (this.frameTimer > 0.8) {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
             }
-            
+
             if (this.dc >= 1) {
-                for (let i = this.cords.length - 1; i >= 0; --i) {
-                    if (this.cords[i].dir == 'up') {
-                        this.cords[i].y -= 1;
-                    } else if (this.cords[i].dir == 'down') {
-                        this.cords[i].y += 1;
-                    } else if (this.cords[i].dir == 'left') {
-                        this.cords[i].x -= 1;
-                    } else if (this.cords[i].dir == 'right') {
-                        this.cords[i].x += 1;
+                for (let i = this.segments.length - 1; i >= 0; --i) {
+                    if (this.segments[i].move >= 1) {
+                        this.segments[i].move -= 1;
+                        continue;
+                    }
+                    if (this.segments[i].dir == 'up') {
+                        this.segments[i].y -= 1;
+                    } else if (this.segments[i].dir == 'down') {
+                        this.segments[i].y += 1;
+                    } else if (this.segments[i].dir == 'left') {
+                        this.segments[i].x -= 1;
+                    } else if (this.segments[i].dir == 'right') {
+                        this.segments[i].x += 1;
                     }
                     if (i > 0) {
-                        this.cords[i].dir = this.cords[i - 1].dir;
+                        this.segments[i].dir = this.segments[i - 1].dir;
                     }
                 }
                 this.dc -= 1;
                 
                 let p = new Map();
-                p.set(this.cords[0].x * 10000 + this.cords[0].y, 0);
-                let s = [{x: this.cords[0].x, y: this.cords[0].y}];
+                p.set(this.segments[0].x * 10000 + this.segments[0].y, 0);
+                let s = [{x: this.segments[0].x, y: this.segments[0].y}];
 
                 let addS = (i, j, ni, nj) => {
                     let t = p.get(i * 10000 + j) + 1;
@@ -106,48 +112,94 @@ export const createSnake = (level, x, y, length) => {
                 while (s.length != 0) {
                     
                     let {x: i, y: j} = s.shift();
-                    // this.level.addAnimation(createAnimation(this.level, i, j, 1, 1, animations.pointer.frames, 1));
                     
                     addS(i, j, i, j - 1);
                     addS(i, j, i, j + 1);
                     addS(i, j, i - 1, j);
                     addS(i, j, i + 1, j);
                     
-                    //console.log(`x: ${i}, y: ${j} = ${p.get(i * 10000 + i)}`);
                 }
                 
-                let t = this.findPlayer();
+                let players = this.findPlayers();
                 let d = 'up';
 
-                if (p.get(Math.round(t.x) * 10000 + Math.round(t.y)) !== undefined) {
-                    for (let i = Math.round(t.x), j = Math.round(t.y); i !== this.cords[0].x || j !== this.cords[0].y;) {
-                        if (p.get(i * 10000 + j - 1) === p.get(i * 10000 + j) - 1) {
-                            d = 'down';
-                            j -= 1;
-                        } else if (p.get(i * 10000 + j + 1) === p.get(i * 10000 + j) - 1) {
-                            d = 'up';
-                            j += 1;
-                        } else if (p.get((i - 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
-                            d = 'right';
-                            i -= 1;
-                        } else if (p.get((i + 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
-                            d = 'left';
-                            i += 1;
+                for (const player of players) {
+                    if (p.get(Math.round(player.x) * 10000 + Math.round(player.y)) !== undefined) {
+                        for (let i = Math.round(player.x), j = Math.round(player.y); i !== this.segments[0].x || j !== this.segments[0].y;) {
+                            if (p.get(i * 10000 + j - 1) === p.get(i * 10000 + j) - 1) {
+                                d = 'down';
+                                j -= 1;
+                            } else if (p.get(i * 10000 + j + 1) === p.get(i * 10000 + j) - 1) {
+                                d = 'up';
+                                j += 1;
+                            } else if (p.get((i - 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
+                                d = 'right';
+                                i -= 1;
+                            } else if (p.get((i + 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
+                                d = 'left';
+                                i += 1;
+                            }
                         }
+                        break;
                     }
                 }
 
-                this.cords[0].dir = d;
+                this.segments[0].dir = d;
+
+                if (this.segments[0].dir === 'up' && !this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)) {
+                    this.segments[0].dir = 'rand';
+                } else if (this.segments[0].dir === 'down' && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)) {
+                    this.segments[0].dir = 'rand';
+                } else if (this.segments[0].dir === 'left' && !this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)) {
+                    this.segments[0].dir = 'rand';
+                } else if (this.segments[0].dir === 'right' && !this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
+                    this.segments[0].dir = 'rand';
+                }
                 
+
+                if (this.segments[0].dir === 'rand') {
+                    if (this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)) {
+                        this.segments[0].dir = 'up';
+                    } else if (this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)) {
+                        this.segments[0].dir = 'down';
+                    } else if (this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)) {
+                        this.segments[0].dir = 'left';
+                    } else if (this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
+                        this.segments[0].dir = 'right';
+                    }
+                }
+
+                // if (!this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)
+                //  && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)
+                //  && !this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)
+                //  && !this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
+                //     this.canMove = false;
+                //     this.segments[0].dir = 'down';
+                //  } else {
+                //     this.canMove = true;
+                //  }
+
+            }
+
+            if (!this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)
+                 && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)
+                 && !this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)
+                 && !this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
+                    this.canMove = false;
+                    this.segments[0].dir = 'down';
+            } else {
+                this.canMove = true;
             }
             
-            this.dc += this.speed * dt;
+            if (this.canMove) {
+                this.dc += this.speed * dt;
+            }
             
         },
 
         render () {
-            for (let i = this.cords.length - 1; i >= 0; --i) {
-                let cord = this.cords[i];
+            for (let i = this.segments.length - 1; i >= 0; --i) {
+                let cord = this.segments[i];
                 let {x, y, dir} = cord;                
                 switch (dir) {
                     case 'up':
@@ -161,13 +213,14 @@ export const createSnake = (level, x, y, length) => {
                         break;
                     case 'right':
                         x += this.dc;
+                        break;
                 }
                 let s;
                 switch (i) {
                     case 0:
                         s = 'head';
                         break;
-                    case this.cords.length - 1:
+                    case this.segments.length - 1:
                         s = 'hvost';
                         break;
                     default:
@@ -178,5 +231,24 @@ export const createSnake = (level, x, y, length) => {
                 draw(tex[this.frame % tex.length], x, y, this.rendWidth, this.rendHeight);
             }
         },
+
+        kill () {
+            this.level.removeEntity(this.id);
+        },
+
+        damage (st) {
+            if (this.resistTimer > 0.5) {
+                this.resistTimer = 0;
+                this.segSt -= st;
+                if (this.segSt <= 0) {
+                    this.segments.pop();
+                    this.segSt += Math.ceil(0 - this.segSt);
+                }
+                if (this.segments.length == 0) {
+                    this.kill();
+                }
+            }
+        },
+
     }
 }

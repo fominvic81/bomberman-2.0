@@ -1,4 +1,4 @@
-import { draw } from '../../drawing';
+import { draw, createAnimation } from '../../drawing';
 import tiles from '../../tiles';
 
 import settings from './settings';
@@ -26,6 +26,9 @@ export const createExplos = (level, x, y, dir, power) => {
         rendWidth: settings.rendWidth,
         rendHeight: settings.rendHeight,
         life_time: settings.life_time,
+        kill_time: settings.kill_time,
+        isRend: false,
+        rend_time: settings.rend_time,
         entityName: 'explos',
         dir: dir,
         spread: false,
@@ -112,31 +115,42 @@ export const createExplos = (level, x, y, dir, power) => {
         },
 
         render () {
+            if (this.isRend) return;
+            this.isRend = true;
             if (this.dir == 'center') {
-                draw(this.centerFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                // draw(this.centerFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.centerFrames, this.rend_time))
             } else if (this.dir == 'up') {
                 if (this.power != 0) {
-                    draw(this.upFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.upFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.upFrames, this.rend_time))
                 } else {
-                    draw(this.upEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.upEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.upEndFrames, this.rend_time))
                 }
             } else if (this.dir == 'down') {
                 if (this.power != 0) {
-                    draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.downFrames, this.rend_time))
                 } else {
-                    draw(this.downEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.downEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.downEndFrames, this.rend_time))
                 }
             } else if (this.dir == 'left') {
                 if (this.power != 0) {
-                    draw(this.leftFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.leftFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.leftFrames, this.rend_time))
                 } else {
-                    draw(this.leftEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.leftEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.leftEndFrames, this.rend_time))
                 }
             } else if (this.dir == 'right') {
                 if (this.power != 0) {
-                    draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.rightFrames, this.rend_time))
                 } else {
-                    draw(this.rightEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    // draw(this.rightEndFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                    this.level.addAnimation(createAnimation(this.level, this.x, this.y, this.rendWidth, this.rendHeight, this.rightEndFrames, this.rend_time))
                 }
             }
         },

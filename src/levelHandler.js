@@ -113,6 +113,7 @@ export const createLevel = level => {
                         }  
                         if (entity1.entityName === 'player' && entity2.entityName === 'explos') {
                             if (entity1.protect === 1) continue;
+                            if (entity2.time >= entity2.kill_time) continue;
                             entity1.kill();
                         }
                         if (entity1.entityName === 'player' && entity2.entityName === 'bonus') {
@@ -122,15 +123,48 @@ export const createLevel = level => {
                             entity2.kill();
                         }
                         if (entity1.entityName === 'bonus' && entity2.entityName === 'explos') {
+                            if (entity2.time >= entity2.kill_time) continue;
                             if (entity1.time > entity2.life_time + 0.05) {
                                 entity1.kill(true);
                             }
                         }
                         if (entity1.entityName === 'enemy' && entity2.entityName === 'explos') {
+                            if (entity2.time >= entity2.kill_time) continue;
                             entity1.kill();
                         }
                         if (entity1.entityName === 'enemy' && entity2.entityName === 'player') {
                             entity2.kill();
+                        }
+                    }
+                    if (entity2.entityName === 'snake') {
+                        for (const seg of entity2.segments) {
+                            let s = {x: seg.x, y: seg.y};
+                            switch (seg.dir) {
+                                case 'up':
+                                    s.y -= entity2.dc;
+                                    break;
+                                    case 'down':
+                                        s.y += entity2.dc;
+                                        break;
+                                    case 'left':
+                                        s.x -= entity2.dc;
+                                    break;
+                                case 'right':
+                                    s.x += entity2.dc;
+                                    break;
+                            }
+                            if (isCollide({x: entity1.x, y: entity1.y, width: entity1.width, height: entity1.height},
+                                {x: s.x, y: s.y, width: entity2.width, height: entity2.height})) {
+                                switch (entity1.entityName) {
+                                    case 'player':
+                                        entity1.kill();
+                                        break;
+                                    case 'explos':
+                                        if (!(entity2.time >= entity2.kill_time)) {
+                                            entity2.damage(0.5);
+                                        }
+                                }
+                            }
                         }
                     }
                 }
@@ -139,7 +173,7 @@ export const createLevel = level => {
                 }
             }
             
-            for (const anim of this.animations) {
+            for (const anim of [...this.animations]) {
                 anim.update(dt);
             }
         },
