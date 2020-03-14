@@ -15,6 +15,8 @@ export const createSnake = (level, x, y, length) => {
         segSt: 1,
         time: 0,
         resistTimer: 0,
+        resistTime: 2,
+        isRend: true,
         frameTimer: 0,
         frameCount: 4,
         frame: 0,
@@ -46,9 +48,9 @@ export const createSnake = (level, x, y, length) => {
                     pl.push({x: entity.x, y: entity.y, dist: d});
                 }
             }
-            if (pl.length === 0) {
-                return;
-            }
+            // if (pl.length === 0) {
+            //     return;
+            // }
             pl.sort((a, b) => a.dist > b.dist ? 1 : -1)
 
             return pl;
@@ -72,6 +74,12 @@ export const createSnake = (level, x, y, length) => {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
+            }
+
+            if (this.resistTimer <= this.resistTime) {
+                this.isRend = Math.floor(this.resistTimer / (this.resistTime / 16)) % 2;
+            } else {
+                this.isRend = true;
             }
 
             if (this.dc >= 1) {
@@ -121,31 +129,35 @@ export const createSnake = (level, x, y, length) => {
                 }
                 
                 let players = this.findPlayers();
-                let d = 'up';
+                let d = 'rand';
 
-                for (const player of players) {
-                    if (p.get(Math.round(player.x) * 10000 + Math.round(player.y)) !== undefined) {
-                        for (let i = Math.round(player.x), j = Math.round(player.y); i !== this.segments[0].x || j !== this.segments[0].y;) {
-                            if (p.get(i * 10000 + j - 1) === p.get(i * 10000 + j) - 1) {
-                                d = 'down';
-                                j -= 1;
-                            } else if (p.get(i * 10000 + j + 1) === p.get(i * 10000 + j) - 1) {
-                                d = 'up';
-                                j += 1;
-                            } else if (p.get((i - 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
-                                d = 'right';
-                                i -= 1;
-                            } else if (p.get((i + 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
-                                d = 'left';
-                                i += 1;
+                if (players.length !== 0) {
+                    for (const player of players) {
+                        if (p.get(Math.round(player.x) * 10000 + Math.round(player.y)) !== undefined) {
+                            for (let i = Math.round(player.x), j = Math.round(player.y); i !== this.segments[0].x || j !== this.segments[0].y;) {
+                                if (p.get(i * 10000 + j - 1) === p.get(i * 10000 + j) - 1) {
+                                    d = 'down';
+                                    j -= 1;
+                                } else if (p.get(i * 10000 + j + 1) === p.get(i * 10000 + j) - 1) {
+                                    d = 'up';
+                                    j += 1;
+                                } else if (p.get((i - 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
+                                    d = 'right';
+                                    i -= 1;
+                                } else if (p.get((i + 1) * 10000 + j) === p.get(i * 10000 + j) - 1) {
+                                    d = 'left';
+                                    i += 1;
+                                }
                             }
+                            break;
                         }
-                        break;
                     }
+                } else {
+                    // d = 'rand';
                 }
-
+                
                 this.segments[0].dir = d;
-
+                
                 if (this.segments[0].dir === 'up' && !this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)) {
                     this.segments[0].dir = 'rand';
                 } else if (this.segments[0].dir === 'down' && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)) {
@@ -156,7 +168,7 @@ export const createSnake = (level, x, y, length) => {
                     this.segments[0].dir = 'rand';
                 }
                 
-
+                
                 if (this.segments[0].dir === 'rand') {
                     if (this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)) {
                         this.segments[0].dir = 'up';
@@ -168,25 +180,14 @@ export const createSnake = (level, x, y, length) => {
                         this.segments[0].dir = 'right';
                     }
                 }
-
-                // if (!this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)
-                //  && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)
-                //  && !this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)
-                //  && !this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
-                //     this.canMove = false;
-                //     this.segments[0].dir = 'down';
-                //  } else {
-                //     this.canMove = true;
-                //  }
-
             }
-
+                    
             if (!this.canMoveTo(this.segments[0].x, this.segments[0].y - 1)
-                 && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)
-                 && !this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)
-                 && !this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
-                    this.canMove = false;
-                    this.segments[0].dir = 'down';
+             && !this.canMoveTo(this.segments[0].x, this.segments[0].y + 1)
+             && !this.canMoveTo(this.segments[0].x - 1, this.segments[0].y)
+             && !this.canMoveTo(this.segments[0].x + 1, this.segments[0].y)) {
+            this.canMove = false;
+            this.segments[0].dir = 'down';
             } else {
                 this.canMove = true;
             }
@@ -198,37 +199,39 @@ export const createSnake = (level, x, y, length) => {
         },
 
         render () {
-            for (let i = this.segments.length - 1; i >= 0; --i) {
-                let cord = this.segments[i];
-                let {x, y, dir} = cord;                
-                switch (dir) {
-                    case 'up':
-                        y -= this.dc;
-                        break
-                    case 'down':
-                        y += this.dc;
-                        break;
-                    case 'left':
-                        x -= this.dc;
-                        break;
-                    case 'right':
-                        x += this.dc;
-                        break;
+            if (this.isRend) {
+                for (let i = this.segments.length - 1; i >= 0; --i) {
+                    let cord = this.segments[i];
+                    let {x, y, dir} = cord;                
+                    switch (dir) {
+                        case 'up':
+                            y -= this.dc;
+                            break
+                        case 'down':
+                            y += this.dc;
+                            break;
+                        case 'left':
+                            x -= this.dc;
+                            break;
+                        case 'right':
+                            x += this.dc;
+                            break;
+                    }
+                    let s;
+                    switch (i) {
+                        case 0:
+                            s = 'head';
+                            break;
+                        case this.segments.length - 1:
+                            s = 'hvost';
+                            break;
+                        default:
+                            s = 'seg';
+                            break;
+                    }
+                    const tex = settings.frames[s + dir[0].toUpperCase() + dir.substr(1)];
+                    draw(tex[this.frame % tex.length], x, y, this.rendWidth, this.rendHeight);
                 }
-                let s;
-                switch (i) {
-                    case 0:
-                        s = 'head';
-                        break;
-                    case this.segments.length - 1:
-                        s = 'hvost';
-                        break;
-                    default:
-                        s = 'seg';
-                        break;
-                }
-                const tex = settings.frames[s + dir[0].toUpperCase() + dir.substr(1)];
-                draw(tex[this.frame % tex.length], x, y, this.rendWidth, this.rendHeight);
             }
         },
 
@@ -236,13 +239,13 @@ export const createSnake = (level, x, y, length) => {
             this.level.removeEntity(this.id);
         },
 
-        damage (st) {
-            if (this.resistTimer > 0.5) {
+        damage () {
+            if (this.resistTimer > this.resistTime) {
                 this.resistTimer = 0;
-                this.segSt -= st;
+                this.segSt -= 1;
                 if (this.segSt <= 0) {
                     this.segments.pop();
-                    this.segSt += Math.ceil(0 - this.segSt);
+                    this.segSt += 1;
                 }
                 if (this.segments.length == 0) {
                     this.kill();

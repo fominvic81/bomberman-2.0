@@ -16,7 +16,7 @@ export default {
     leftEndFrames: img(['explos_left_end1.png', 'explos_left_end2.png', 'explos_left_end3.png', 'explos_left_end4.png', 'explos_left_end5.png', 'explos_left_end6.png']),
     rightFrames: img(['explos_right1.png', 'explos_right2.png', 'explos_right3.png', 'explos_right4.png', 'explos_right5.png', 'explos_right6.png']),
     rightEndFrames: img(['explos_right_end1.png', 'explos_right_end2.png', 'explos_right_end3.png', 'explos_right_end4.png', 'explos_right_end5.png', 'explos_right_end6.png']),
-    life_time: 0.1,
+    life_time: 0.3,
     kill_time: 0.001,
     rend_time: 0.3,
 };

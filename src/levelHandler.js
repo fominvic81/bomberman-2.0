@@ -11,6 +11,7 @@ import { createTripod } from './entities/tripod';
 import { createWorm } from './entities/worm';
 import { createSnake } from './entities/snake';
 import { createQueen } from './entities/queen';
+import { createQueenFragment } from './entities/queen_fragment';
 import { rand, isCollide } from './common';
 import { draw } from './drawing';
 import tiles from './tiles';
@@ -88,6 +89,9 @@ export const createLevel = level => {
                 if (entity.name === 'queen') {
                     this.addEntity(createQueen(this, entity.x, entity.y));
                 }
+                if (entity.name === 'queen_fragment') {
+                    this.addEntity(createQueenFragment(this, entity.x, entity.y));
+                }
             }
         },
 
@@ -135,6 +139,12 @@ export const createLevel = level => {
                         if (entity1.entityName === 'enemy' && entity2.entityName === 'player') {
                             entity2.kill();
                         }
+                        if (entity1.entityName === 'queen' && entity2.entityName === 'explos') {
+                            entity1.damage();
+                        }
+                        if (entity1.entityName === 'queen' && entity2.entityName === 'player') {
+                            entity2.kill();
+                        }
                     }
                     if (entity2.entityName === 'snake') {
                         for (const seg of entity2.segments) {
@@ -161,7 +171,7 @@ export const createLevel = level => {
                                         break;
                                     case 'explos':
                                         if (!(entity2.time >= entity2.kill_time)) {
-                                            entity2.damage(0.5);
+                                            entity2.damage();
                                         }
                                 }
                             }
@@ -186,7 +196,11 @@ export const createLevel = level => {
             }
 
             for (const entity of this.entities) {
-                entity.render();
+                try {
+                    entity.render();
+                } catch (e) {
+                    console.error(e);
+                }
             }
 
             for (const anim of this.animations) {
