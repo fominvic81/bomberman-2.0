@@ -12,7 +12,7 @@ const handleLoad = () => {
 };
 
 const handleStart = () => {
-    setLevel(createLevel(levels.level3));
+    setLevel(createLevel(levels.level1));
 };
 
 const handleResize = () => {

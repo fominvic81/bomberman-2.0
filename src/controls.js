@@ -4,13 +4,15 @@ export default {
         down: 'ArrowDown',
         left: 'ArrowLeft',
         right: 'ArrowRight',
-        putBomb: ' ',
+        fire1: ' ',
+        fire2: '.',
     },
     player2: {
         up: 'w',
         down: 's',
         left: 'a',
         right: 'd',
-        putBomb: 'c',
+        fire1: 'c',
+        fire2: 'e',
     },
 };

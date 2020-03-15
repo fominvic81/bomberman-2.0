@@ -21,8 +21,8 @@ export const createLevel = level => {
         map: level.tileMap,
         startEntities: level.startEntities,
         bonuses: level.bonuses,
-        entities: [],
-        animations: [],
+        entities: new Map(),
+        animations: new Map(),
         isS: false,
 
         setup () {
@@ -50,47 +50,49 @@ export const createLevel = level => {
                 }
             }
             for (const entity of this.startEntities) {
-                if (entity.name === 'player') {
-                    this.addEntity(createPlayer(this, entity.x, entity.y, entity.controls));
-                }
-                if (entity.name === 'bomb') {
-                    this.addEntity(createBomb(this, entity.x, entity.y, entity.power));
-                }
-                if (entity.name === 'bonus') {
-                    this.addEntity(createBonus(this, entity.x, entity.y, entity.bonusName));
-                }
-                if (entity.name === 'explos') {
-                    this.addEntity(createExplos(this, entity.x, entity.y, entity.dir, entity.power));
-                }
-                if (entity.name === 'iceCream') {
-                    this.addEntity(createIceCream(this, entity.x, entity.y));
-                }
-                if (entity.name === 'pillow') {
-                    this.addEntity(createPillow(this, entity.x, entity.y));
-                }
-                if (entity.name === 'sPillow') {
-                    this.addEntity(createSPillow(this, entity.x, entity.y));
-                }
-                if (entity.name === 'worm') {
-                    this.addEntity(createWorm(this, entity.x, entity.y));
-                }
-                if (entity.name === 'head') {
-                    this.addEntity(createHead(this, entity.x, entity.y));
-                }
-                if (entity.name === 'tripod') {
-                    this.addEntity(createTripod(this, entity.x, entity.y));
-                }
-                if (entity.name === 'bat') {
-                    this.addEntity(createBat(this, entity.x, entity.y));
-                }
-                if (entity.name === 'snake') {
-                    this.addEntity(createSnake(this, entity.x, entity.y, entity.length));
-                }
-                if (entity.name === 'queen') {
-                    this.addEntity(createQueen(this, entity.x, entity.y));
-                }
-                if (entity.name === 'queen_fragment') {
-                    this.addEntity(createQueenFragment(this, entity.x, entity.y));
+                switch (entity.name) {
+                    case 'player':
+                        this.addEntity(createPlayer(this, entity.x, entity.y, entity.controls));
+                        break;
+                    case 'bomb':
+                        this.addEntity(createBomb(this, entity.x, entity.y, entity.power));
+                        break;
+                    case 'bonus':
+                        this.addEntity(createBonus(this, entity.x, entity.y, entity.bonusName));
+                        break;
+                    case 'explos':
+                        this.addEntity(createExplos(this, entity.x, entity.y, entity.dir, entity.power));
+                        break;
+                    case 'iceCream':
+                        this.addEntity(createIceCream(this, entity.x, entity.y));
+                        break;
+                    case 'pillow':
+                        this.addEntity(createPillow(this, entity.x, entity.y));
+                        break;
+                    case 'sPillow':
+                        this.addEntity(createSPillow(this, entity.x, entity.y));
+                        break;
+                    case 'worm':
+                        this.addEntity(createWorm(this, entity.x, entity.y));
+                        break;
+                    case 'head':
+                        this.addEntity(createHead(this, entity.x, entity.y));
+                        break;
+                    case 'tripod':
+                        this.addEntity(createTripod(this, entity.x, entity.y));
+                        break;
+                    case 'bat':
+                        this.addEntity(createBat(this, entity.x, entity.y));
+                        break;
+                    case 'snake':
+                        this.addEntity(createSnake(this, entity.x, entity.y, entity.length));
+                        break;
+                    case 'queen':
+                        this.addEntity(createQueen(this, entity.x, entity.y));
+                        break;
+                    case 'queen_fragment':
+                        this.addEntity(createQueenFragment(this, entity.x, entity.y));
+                        break;
                 }
             }
         },
@@ -98,7 +100,7 @@ export const createLevel = level => {
         update (dt) {
             if (!this.isS) this.setup();
 
-            const entities = [...this.entities];
+            const entities = [...this.entities.values()];
 
             for (const entity1 of entities) {
                 entity1.update(dt);
@@ -178,12 +180,12 @@ export const createLevel = level => {
                         }
                     }
                 }
-                if (entity1.entityName === 'player') {
-                    entity1.move(this.map);
-                }
+                // if (entity1.entityName === 'player') {
+                //     entity1.move(this.map);
+                // }
             }
             
-            for (const anim of [...this.animations]) {
+            for (const anim of [...this.animations.values()]) {
                 anim.update(dt);
             }
         },
@@ -195,7 +197,7 @@ export const createLevel = level => {
                 }
             }
 
-            for (const entity of this.entities) {
+            for (const entity of this.entities.values()) {
                 try {
                     entity.render();
                 } catch (e) {
@@ -203,7 +205,7 @@ export const createLevel = level => {
                 }
             }
 
-            for (const anim of this.animations) {
+            for (const anim of this.animations.values()) {
                 anim.render();
             }
         },
@@ -216,39 +218,28 @@ export const createLevel = level => {
                 this.map[x][y].st = 1;
                 if (this.map[x][y].bonus !== undefined) {
                     this.addEntity(createBonus(this, x, y, this.map[x][y].bonus));
+                    this.map[x][y].bonus = undefined;
                 }
             }
         },
 
         addEntity (entity) {
             entity.id = Symbol('id');
-            this.entities.push(entity);
+            this.entities.set(entity.id, entity);
             if (entity.init) entity.init();
         },
 
         removeEntity(id) {
-            for (let i = 0; i < this.entities.length; ++i) {
-                const entity = this.entities[i];
-                if (entity.id === id) {
-                    this.entities.splice(i, 1);
-                    break;
-                }
-            }
+            this.entities.delete(id);
         },
 
         addAnimation (anim) {
             anim.id = Symbol('id');
-            this.animations.push(anim);
+            this.animations.set(anim.id, anim);
         },
 
         removeAnimation (id) {
-            for (let i = 0; i < this.animations.length; ++i) {
-                let anim = this.animations[i];
-                if (anim.id === id) {
-                    this.animations.splice(i, 1);
-                    break;
-                }
-            }
+            this.animations.delete(id);
         },
 
         

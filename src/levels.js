@@ -38,13 +38,18 @@ export const level1 = {
         {name: 'worm', x: 5, y: 5},
         {name: 'worm', x: 3, y: 3},
         {name: 'head', x: 8, y: 6},
-        {name: 'tripod', x: 6, y: 4},
+        // {name: 'tripod', x: 6, y: 4},
     ],
     bonuses: {
-        flame: 3,
-        extraBomb: 3,
+        flame: 4,
+        extraBomb: 4,
         rollers: 2,
         protect: 1,
+        burnWall: 1,
+        doubleBomb: 1,
+        radioBomb: 1,
+        throughBomb: 1,
+        throughWall: 1,
     },
 }
 
@@ -94,7 +99,7 @@ export const level2 = {
 export const level3 = {
     tileMap: [
         [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-        [2,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
+        [2,0,0,1,1,1,1,1,0,0,0,0,0,0,2],
         [2,0,2,0,2,0,2,0,2,0,2,0,2,0,2],
         [2,0,0,0,0,0,0,0,0,0,0,0,0,0,2],
         [2,0,2,0,2,0,2,0,2,0,2,0,2,0,2],
@@ -126,6 +131,6 @@ export const level3 = {
     ],
 
     bonuses: {
-
+        
     },
 }

@@ -3,7 +3,7 @@ import tiles from '../../tiles';
 
 import settings from './settings';
 
-export const createExplos = (level, x, y, dir, power) => {
+export const createExplos = (level, x, y, dir, power, isBurn) => {
     return {
         level: level,
         x: x,
@@ -33,15 +33,23 @@ export const createExplos = (level, x, y, dir, power) => {
         dir: dir,
         spread: false,
         power: power,
+        isBurn: isBurn,
+
+        canMoveTo (x, y) {
+            if (tiles[this.level.map[x][y].tile].collide && (this.isBurn === 0 || (this.isBurn === 1 && tiles[this.level.map[x][y].tile].collideLevel > 1))) {
+                return false;
+            }
+            return true;
+        },
 
         spreadExplos() {
             for (let i = 1; i <= this.power; ++i) {
                 let nx = this.x;
                 let ny = this.y - i;
                 let npower = this.power - i;
-                if (!tiles[this.level.map[nx][ny].tile].explosResist) {
+                this.level.damageTile(nx, ny, 1);
+                if (!this.canMoveTo(nx, ny)) {
                     // this.level.map[nx][ny].st -= 1;
-                    this.level.damageTile(nx, ny, 1);
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'up', npower));
                     break;
@@ -52,9 +60,9 @@ export const createExplos = (level, x, y, dir, power) => {
                 let nx = this.x;
                 let ny = this.y + i;
                 let npower = this.power - i;
-                if (!tiles[this.level.map[nx][ny].tile].explosResist) {
+                this.level.damageTile(nx, ny, 1);
+                if (!this.canMoveTo(nx, ny)) {
                     // this.level.map[nx][ny].st -= 1;
-                    this.level.damageTile(nx, ny, 1);
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'down', npower));
                     break;
@@ -65,9 +73,9 @@ export const createExplos = (level, x, y, dir, power) => {
                 let nx = this.x - i;
                 let ny = this.y;
                 let npower = this.power - i;
-                if (!tiles[this.level.map[nx][ny].tile].explosResist) {
+                this.level.damageTile(nx, ny, 1);
+                if (!this.canMoveTo(nx, ny)) {
                     // this.level.map[nx][ny].st -= 1;
-                    this.level.damageTile(nx, ny, 1);
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'left', npower));
                     break;
@@ -78,9 +86,9 @@ export const createExplos = (level, x, y, dir, power) => {
                 let nx = this.x + i;
                 let ny = this.y;
                 let npower = this.power - i;
-                if (!tiles[this.level.map[nx][ny].tile].explosResist) {
+                this.level.damageTile(nx, ny, 1);
+                if (!this.canMoveTo(nx, ny)) {
                     // this.level.map[nx][ny].st -= 1;
-                    this.level.damageTile(nx, ny, 1);
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'right', npower));
                     break;

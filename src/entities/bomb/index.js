@@ -3,7 +3,7 @@ import { createExplos } from '../explos';
 
 import settings from './settings';
 
-export const createBomb = (level, x, y, power, owner = false) => {
+export const createBomb = (level, x, y, power, isDouble, isBurn, isRadio, owner = false) => {
     return {
         level: level,
         x: x,
@@ -14,6 +14,9 @@ export const createBomb = (level, x, y, power, owner = false) => {
         dy: 0,
         time: 0,
         power: power,
+        isDouble: isDouble,
+        isBurn: isBurn,
+        isRadio: isRadio,
         frameTimer: 0,
         frameCount: settings.frames.length,
         frames: settings.frames,
@@ -25,7 +28,9 @@ export const createBomb = (level, x, y, power, owner = false) => {
         life_time: settings.life_time,
         entityName: 'bomb',
         owner: owner,
+        activated: false,
         isS: false,
+        
 
         setup() {
             this.isS = true;
@@ -42,14 +47,8 @@ export const createBomb = (level, x, y, power, owner = false) => {
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
             }
-
-            if (this.time >= this.life_time) {
-                if (this.owner !== false) {
-                    --this.owner.bombCount;
-                }
-                this.level.map[this.x][this.y].hasBomb = false;
-                this.level.addEntity(createExplos(this.level, this.x, this.y, 'center', this.power));
-                this.level.removeEntity(this.id);
+            if (this.time >= this.life_time && !this.isRadio) {
+                this.activate();
             }
         },
 
@@ -59,7 +58,16 @@ export const createBomb = (level, x, y, power, owner = false) => {
 
 
         activate () {
-            this.time = this.life_time + 5;
+            if (this.activated) {
+                return;
+            }
+            this.activated = true;
+            if (this.owner !== false) {
+                --this.owner.bombCount;
+            }
+            this.level.map[this.x][this.y].hasBomb = false;
+            this.level.addEntity(createExplos(this.level, this.x, this.y, 'center', this.power, this.isBurn));
+            this.level.removeEntity(this.id);
         },
 
 

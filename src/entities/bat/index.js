@@ -50,24 +50,6 @@ export const createBat = (level, x, y) => {
             }
         },
 
-        findPlayer () {
-            let pl = {x: 0, y: 0, dist: Infinity};
-            for (entity of this.level.entities) {
-                if (entity.entityName == 'player') {
-                    let d = dist(this.x, this.y, entity.x, entity.y);
-                    if (pl.dist >= d) {
-                        pl.dist = d;
-                        pl.x = entity.x;
-                        pl.y = entity.y;
-                    }
-                }
-            }
-            if (pl.dist == Infinity) {
-                return;
-            }
-            return {x: pl.x, y: pl.y};
-        },
-
         update (dt) {
             this.time += dt;
             this.frameTimer += dt;

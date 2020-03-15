@@ -42,7 +42,7 @@ export const createSnake = (level, x, y, length) => {
 
         findPlayers () {
             let pl = [];
-            for (const entity of this.level.entities) {
+            for (const entity of this.level.entities.values()) {
                 if (entity.entityName === 'player') {
                     let d = dist(this.segments[0].x, this.segments[0].y, entity.x, entity.y);
                     pl.push({x: entity.x, y: entity.y, dist: d});

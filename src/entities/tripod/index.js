@@ -42,7 +42,7 @@ export const createTripod = (level, x, y) => {
 
         findPlayer () {
             let pl = {x: 0, y: 0, dist: Infinity};
-            for (const entity of this.level.entities) {
+            for (const entity of this.level.entities.values()) {
                 if (entity.entityName == 'player') {
                     let d = dist(this.x, this.y, entity.x, entity.y);
                     if (pl.dist >= d) {

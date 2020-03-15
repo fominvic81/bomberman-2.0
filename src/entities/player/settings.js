@@ -7,7 +7,7 @@ export default {
     height: 0.8,
     rendWidth: 1.6,
     rendHeight: 1.6,
-    speed: 3,
+    speed: 4,
     upFrames: img(['player_up1.png', 'player_up2.png', 'player_up3.png', 'player_up4.png']),
     downFrames: img(['player_down1.png', 'player_down2.png', 'player_down3.png', 'player_down4.png']),
     leftFrames: img(['player_left1.png', 'player_left2.png', 'player_left3.png', 'player_left4.png']),

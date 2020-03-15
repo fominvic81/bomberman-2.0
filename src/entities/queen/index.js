@@ -48,7 +48,7 @@ export const createQueen = (level, x, y) => {
 
         findPlayers () {
             let pl = [];
-            for (const entity of this.level.entities) {
+            for (const entity of this.level.entities.values()) {
                 if (entity.entityName === 'player') {
                     let d = dist(this.x, this.y, entity.x, entity.y);
                     pl.push({x: entity.x, y: entity.y, dist: d});

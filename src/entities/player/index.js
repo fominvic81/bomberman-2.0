@@ -36,13 +36,19 @@ export const createPlayer = (level, x, y, controls) => {
         deadFrames: settings.deadFrames,
         frame: 0,
         putBombTimer: 10,
-        canPutBomb: false,
         touchToBomb: false,
         power: bonuses.flame.startCount,
         maxBombCount: bonuses.extraBomb.startCount,
         bombCount: 0,        
         rollers: bonuses.rollers.startCount,
         protect: bonuses.protect.startCount,
+        burnWall: bonuses.burnWall.startCount,
+        doubleBomb: bonuses.doubleBomb.startCount,
+        radioBomb: bonuses.radioBomb.startCount,
+        canActivateRadioBomb: true,
+        radioBombs: [],
+        throughBomb: bonuses.throughBomb.startCount,
+        throughWall: bonuses.throughWall.startCount,
         width: settings.width,
         height: settings.height,
         rendWidth: settings.rendWidth,
@@ -52,12 +58,22 @@ export const createPlayer = (level, x, y, controls) => {
         controls: controls,
         touchToB: new Map(),
 
+        canMoveTo (x, y) {
+            if (this.level.map[x][y].hasBomb === true && this.throughBomb === 0) {
+                return false;
+            }
+            if (tiles[this.level.map[x][y].tile].collide && (this.throughWall === 0 || (this.throughWall === 1 && tiles[this.level.map[x][y].tile].collideLevel > 1))) {
+                return false;
+            }
+            return true;
+        },
+
         update (dt) {
             this.time += dt;
             this.putBombTimer += dt;
             this.frameTimer += dt;
 
-            if (this.frameTimer > 0.2) {
+            if (this.frameTimer > 0.125) {
                 this.frameTimer = 0;
                 ++this.frame;
                 this.frame = this.frame % this.frameCount;
@@ -65,12 +81,6 @@ export const createPlayer = (level, x, y, controls) => {
 
             for (const ttb of this.touchToB.keys()) {
                 this.touchToB.set(ttb, this.touchToB.get(ttb) - dt);
-            }
-
-            if (this.putBombTimer >= 0.1) {
-                this.canPutBomb = true;
-            } else {
-                this.canPutBomb = false;
             }
             this.speed = settings.speed;
             this.speed *= Math.log2(this.rollers)/3 + 1;
@@ -91,17 +101,34 @@ export const createPlayer = (level, x, y, controls) => {
                 this.dx += this.speed * dt;
                 this.dir = 'right'; 
         	}
-            if (app.key(this.controls.putBomb)) {
+            if (app.key(this.controls.fire1)) {
                 if (this.bombCount < this.maxBombCount) {
-                    if (this.canPutBomb && !this.touchToBomb) {
-                        this.level.addEntity(createBomb(this.level, Math.round(this.x), Math.round(this.y), this.power, this));
-                        this.putBombTimer = 0;
+                    if (!this.touchToBomb) {
+                        const bomb = createBomb(this.level, Math.round(this.x), Math.round(this.y), this.power, this.doubleBomb, this.burnWall, this.radioBomb, this);
+                        if (this.radioBomb) {
+                            this.radioBombs.push(bomb);
+                        }
+                        this.level.addEntity(bomb);
                         ++this.bombCount;
                     }
                 }
             }
+            if (app.key(this.controls.fire2)) {
+                if (this.canActivateRadioBomb) {
+                    while (this.radioBombs.length > 0) {
+                        const b = this.radioBombs.shift();
+                        if (!b.activated) {
+                            b.activate();
+                            break;
+                        }
+                    }
+                }
+                this.canActivateRadioBomb = false;
+            } else {
+                this.canActivateRadioBomb = true;
+            }
 
-            if (this.dx == 0 && this.dy == 0) {
+            if (this.dx === 0 && this.dy === 0) {
                 this.dir = 'down';
                 this.frame = 0;
             }
@@ -113,10 +140,11 @@ export const createPlayer = (level, x, y, controls) => {
             this.y = this.ny;
 
             this.touchToBomb = false;
+            this.move();
         },
 
-        move (map) {
-            if ((this.dx == 0) && (this.dy == 0)) return;
+        move () {
+            if ((this.dx === 0) && (this.dy === 0)) return;
             let w = this.width;
             let h = this.height;
             let speed = this.speed;
@@ -131,10 +159,10 @@ export const createPlayer = (level, x, y, controls) => {
             
                 for (let j = Math.round(oy + 0.01 - h/2); j <= Math.round(oy-0.01+h/2); ++j) {
                     for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
-                        if (dist(ox, oy, i, j) < w/2 + 0.5) {
+                        if (dist(ox, oy, i, j) < w/2 + 0.49) {
                             this.touchToB.set(i*10000+j, 0.1);
                         }
-                        if ((tiles[map[i][j].tile].collide || (map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
+                        if (!this.canMoveTo(i, j) && (this.touchToB.get(i*10000+j) <= 0 || this.touchToB.get(i*10000+j) === undefined)) {
                             if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
                             if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
                         }
@@ -144,10 +172,10 @@ export const createPlayer = (level, x, y, controls) => {
                
                 for (let i = Math.round(ox + 0.01 - w/2); i <= Math.round(ox-0.01 + w/2); ++i) {
                     for (let j = Math.round(this.ny - h/2); j <= Math.round(this.ny + h/2); ++j) {
-                        if (dist(ox, oy, i, j) < h/2 + 0.5) {
+                        if (dist(ox, oy, i, j) < h/2 + 0.49) {
                             this.touchToB.set(i*10000+j, 0.1);
                         }
-                        if ((tiles[map[i][j].tile].collide || (map[i][j].hasBomb && this.touchToB.get(i*10000+j) <= 0))) {
+                        if (!this.canMoveTo(i, j) && (this.touchToB.get(i*10000+j) <= 0 || this.touchToB.get(i*10000+j) === undefined)) {
                             if (this.dy>0) this.ny = Math.min(this.ny, j - h/2 - 0.5);
                             if (this.dy<0) this.ny = Math.max(this.ny, j + h/2 + 0.5);
                         }         
@@ -157,13 +185,13 @@ export const createPlayer = (level, x, y, controls) => {
         },
 
         render () {
-            if (this.dir == 'down') {
+            if (this.dir === 'down') {
                 draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
-            } else if (this.dir == 'up') {
+            } else if (this.dir === 'up') {
                 draw(this.upFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
-            } else if (this.dir == 'left') {
+            } else if (this.dir === 'left') {
                 draw(this.leftFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
-            } else if (this.dir == 'right') {
+            } else if (this.dir === 'right') {
                 draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
             }
         },

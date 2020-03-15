@@ -1,7 +1,6 @@
 import { ctx } from './app';
 
 export const TILE_SIZE = 44;
-
 export const draw = (img, x, y, w, h) => {
     ctx.save();
 
