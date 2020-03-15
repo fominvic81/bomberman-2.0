@@ -1,8 +1,5 @@
-// export const imgLoader = prefix => images => images.map(path => app.img(`${prefix}/${path}`));
-export const img = path => {
-    const img = new Image();
-	img.src = path;
-	return img;
-};
+import { app } from './app';
+
+export const img = path => app.img(path);
 
 export const imgLoader = prefix => images => images.map(path => img(`${prefix}/${path}`));
