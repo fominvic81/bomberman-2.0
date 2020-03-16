@@ -222,6 +222,7 @@ export const createLevel = level => {
             if (this.map[x][y].st <= 0) {
                 this.map[x][y].tile = 0;
                 this.map[x][y].st = 1;
+                draw_tiles(tiles[this.map[x][y].tile].image, x, y, 1, 1)
                 if (this.map[x][y].bonus !== undefined) {
                     this.addEntity(createBonus(this, x, y, this.map[x][y].bonus));
                     this.map[x][y].bonus = undefined;
