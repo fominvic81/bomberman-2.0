@@ -47,53 +47,53 @@ export const createExplos = (level, x, y, dir, power, isBurn) => {
                 let nx = this.x;
                 let ny = this.y - i;
                 let npower = this.power - i;
-                this.level.damageTile(nx, ny, 1);
                 if (!this.canMoveTo(nx, ny)) {
-                    // this.level.map[nx][ny].st -= 1;
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'up', npower));
+                    this.level.damageTile(nx, ny, 1);
                     break;
                 }
                 this.level.addEntity(createExplos(this.level, nx, ny, 'up', npower));
+                this.level.damageTile(nx, ny, 1);
             }
             for (let i = 1; i <= this.power; ++i) {
                 let nx = this.x;
                 let ny = this.y + i;
                 let npower = this.power - i;
-                this.level.damageTile(nx, ny, 1);
                 if (!this.canMoveTo(nx, ny)) {
-                    // this.level.map[nx][ny].st -= 1;
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'down', npower));
+                    this.level.damageTile(nx, ny, 1);
                     break;
                 }
                 this.level.addEntity(createExplos(this.level, nx, ny, 'down', npower));
+                this.level.damageTile(nx, ny, 1);
             }
             for (let i = 1; i <= this.power; ++i) {
                 let nx = this.x - i;
                 let ny = this.y;
                 let npower = this.power - i;
-                this.level.damageTile(nx, ny, 1);
                 if (!this.canMoveTo(nx, ny)) {
-                    // this.level.map[nx][ny].st -= 1;
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'left', npower));
+                    this.level.damageTile(nx, ny, 1);
                     break;
                 }
                 this.level.addEntity(createExplos(this.level, nx, ny, 'left', npower));
+                this.level.damageTile(nx, ny, 1);
             }
             for (let i = 1; i <= this.power; ++i) {
                 let nx = this.x + i;
                 let ny = this.y;
                 let npower = this.power - i;
-                this.level.damageTile(nx, ny, 1);
                 if (!this.canMoveTo(nx, ny)) {
-                    // this.level.map[nx][ny].st -= 1;
                     npower = 0;
                     this.level.addEntity(createExplos(this.level, nx, ny, 'right', npower));
+                    this.level.damageTile(nx, ny, 1);
                     break;
                 }
                 this.level.addEntity(createExplos(this.level, nx, ny, 'right', npower));
+                this.level.damageTile(nx, ny, 1);
             }
         },
 
