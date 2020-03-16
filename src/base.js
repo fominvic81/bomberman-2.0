@@ -108,7 +108,9 @@ export const initApp = ({
 		for (const layer of layers) {
 			if (layer.opts.global) continue;
 
-			layer.ctx.clearRect(0, 0, data.width, data.height);
+            if (layer.opts.clear !== false) {
+                layer.ctx.clearRect(0, 0, data.width, data.height);
+            }
 		}
 
 		try {

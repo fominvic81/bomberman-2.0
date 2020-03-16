@@ -13,8 +13,10 @@ import { createSnake } from './entities/snake';
 import { createQueen } from './entities/queen';
 import { createQueenFragment } from './entities/queen_fragment';
 import { rand, isCollide } from './common';
-import { draw } from './drawing';
+import { draw, draw_tiles } from './drawing';
 import tiles from './tiles';
+import bonuses from './entities/bonus/bonuses';
+
 
 export const createLevel = level => {
     return {
@@ -95,6 +97,15 @@ export const createLevel = level => {
                         break;
                 }
             }
+
+
+            for (let x = 0; x < this.map.length; ++x) {
+                for (let y = 0; y < this.map[x].length; ++y) {
+                    draw_tiles(tiles[this.map[x][y].tile].image, x, y, 1, 1);
+                }
+            }
+
+
         },
 
         update (dt) {
@@ -191,11 +202,6 @@ export const createLevel = level => {
         },
 
         render () {
-            for (let x = 0; x < this.map.length; ++x) {
-                for (let y = 0; y < this.map[x].length; ++y) {
-                    draw(tiles[this.map[x][y].tile].image, x, y, 1, 1);
-                }
-            }
 
             for (const entity of this.entities.values()) {
                 try {

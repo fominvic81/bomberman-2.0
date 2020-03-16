@@ -1,4 +1,4 @@
-import { ctx } from './app';
+import { ctx, ctx_tiles } from './app';
 
 export const TILE_SIZE = 44;
 export const draw = (img, x, y, w, h) => {
@@ -9,6 +9,17 @@ export const draw = (img, x, y, w, h) => {
     ctx.drawImage(img, x, y, w, h);
 
     ctx.restore();
+};
+
+
+export const draw_tiles = (img, x, y, w, h) => {
+    ctx_tiles.save();
+
+    ctx_tiles.scale(TILE_SIZE, TILE_SIZE);
+    ctx_tiles.translate(-w / 2, -h / 2);
+    ctx_tiles.drawImage(img, x, y, w, h);
+
+    ctx_tiles.restore();
 };
 
 export const createAnimation = (level, x, y, width, height, frames, life_time) => ({

@@ -47,4 +47,5 @@ export const app = initApp({
 });
 
 export const ctx = app.layer().ctx;
+export const ctx_tiles = app.layer({ clear: false }).ctx;
 export const dbg = app.layer({ global: true }).ctx;
