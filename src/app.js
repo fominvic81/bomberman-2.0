@@ -25,11 +25,6 @@ const handleUpdate = dt => {
 };
 
 const handleRender = () => {
-    ctx.fillStyle = '#966';
-    ctx.beginPath();
-    ctx.rect(0, 0, app.data.width, app.data.height);
-    ctx.fill();
-
 
     level.render();
 
@@ -46,6 +41,6 @@ export const app = initApp({
     handleRender,
 });
 
-export const ctx = app.layer().ctx;
 export const ctx_tiles = app.layer({ clear: false }).ctx;
+export const ctx = app.layer().ctx;
 export const dbg = app.layer({ global: true }).ctx;
