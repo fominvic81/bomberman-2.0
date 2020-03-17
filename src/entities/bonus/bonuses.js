@@ -54,7 +54,7 @@ export default {
     },
     doubleBomb: {
         sFrame: img('assets/bonuses/double_bomb/double_bomb.png'),
-        varName: 'doublBomb',
+        varName: 'doubleBomb',
         maxCount: 1,
         startCount: 0,
         width: 0.8,
