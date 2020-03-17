@@ -102,14 +102,17 @@ export const createPlayer = (level, x, y, controls) => {
                 this.dir = 'right'; 
         	}
             if (app.key(this.controls.fire1)) {
-                if (this.bombCount < this.maxBombCount) {
-                    if (!this.touchToBomb) {
-                        const bomb = createBomb(this.level, Math.round(this.x), Math.round(this.y), this.power, this.doubleBomb, this.burnWall, this.radioBomb, this);
-                        if (this.radioBomb) {
-                            this.radioBombs.push(bomb);
+                if (this.putBombTimer > 0.1) {
+                    this.putBombTimer = 0;
+                    if (this.bombCount < this.maxBombCount) {
+                        if (!this.touchToBomb) {
+                            const bomb = createBomb(this.level, Math.round(this.x), Math.round(this.y), this.power, this.doubleBomb, this.burnWall, this.radioBomb, this);
+                            if (this.radioBomb) {
+                                this.radioBombs.push(bomb);
+                            }
+                            this.level.addEntity(bomb);
+                            ++this.bombCount;
                         }
-                        this.level.addEntity(bomb);
-                        ++this.bombCount;
                     }
                 }
             }
@@ -140,31 +143,34 @@ export const createPlayer = (level, x, y, controls) => {
             this.y = this.ny;
 
             this.touchToBomb = false;
-            this.move();
+            this.move(dt);
         },
 
-        move () {
+        move (dt) {
             if ((this.dx === 0) && (this.dy === 0)) return;
             let w = this.width;
             let h = this.height;
             let speed = this.speed;
             let tlSize = 1;
             
-
             for (let u = 1; u <= speed; ++u) {
                 const ox = this.nx;
                 const oy = this.ny;
                 this.nx += this.dx / speed;
                 this.ny += this.dy / speed;
-            
-                for (let j = Math.round(oy + 0.01 - h/2); j <= Math.round(oy-0.01+h/2); ++j) {
+
+                for (let j = Math.round(oy + 0.001 - h/2); j <= Math.round(oy-0.001+h/2); ++j) {
                     for (let i = Math.round(this.nx - w/2); i <= Math.round(this.nx + w/2); ++i) {
                         if (dist(ox, oy, i, j) < w/2 + 0.49) {
                             this.touchToB.set(i*10000+j, 0.1);
                         }
                         if (!this.canMoveTo(i, j) && (this.touchToB.get(i*10000+j) <= 0 || this.touchToB.get(i*10000+j) === undefined)) {
-                            if (this.dx>0) this.nx = Math.min(this.nx, i - w/2 - 0.5);
-                            if (this.dx<0) this.nx = Math.max(this.nx, i + w/2 + 0.5);
+                            if (this.dx>0) {
+                                this.nx = Math.min(this.nx, i - w/2 - 0.5);
+                            }
+                            if (this.dx<0) {
+                                this.nx = Math.max(this.nx, i + w/2 + 0.5);
+                            };
                         }
                         
                     }
