@@ -1,5 +1,6 @@
 import { draw } from '../../drawing';
 import { createExplos } from '../explos';
+import { createEntity } from '../create-entity';
 
 import settings from './settings';
 
@@ -64,6 +65,9 @@ export const createBomb = (level, x, y, power, isDouble, isBurn, isRadio, owner 
             this.activated = true;
             if (this.owner !== false) {
                 --this.owner.bombCount;
+            }
+            if (this.isDouble) {
+                this.level.addEntity(createEntity(this.level, createExplos(this.level, this.x, this.y, 'center', this.power, this.isBurn), 0.2));
             }
             this.level.map[this.x][this.y].hasBomb = false;
             this.level.addEntity(createExplos(this.level, this.x, this.y, 'center', this.power, this.isBurn));
