@@ -99,9 +99,16 @@ export const createLevel = level => {
             }
 
 
-            for (let x = 0; x < this.map.length; ++x) {
-                for (let y = 0; y < this.map[x].length; ++y) {
-                    draw_tiles(tiles[this.map[x][y].tile].image, x, y, 1, 1);
+            for (let x = this.map.length-1; x >= 0; --x) {
+                for (let y = this.map[x].length-1; y >= 0; --y) {
+                    const tile = this.map[x][y].tile;
+                    draw_tiles(tiles[tile].image, x, y, 1, 1);
+                    if (tiles[tile].shadow && !tiles[this.map[x][Math.min(y + 1, this.map[x].length - 1)].tile].shadow) {
+                        this.map[x][y].hasShadow = true;
+                        draw_tiles(tiles[tile].shadow, x, y + tiles[tile].translateShadowY, tiles[tile].shadowWidth, tiles[tile].shadowHeight);
+                    } else {
+                        this.map[x][y].hasShadow = false;
+                    }
                 }
             }
 
@@ -216,6 +223,27 @@ export const createLevel = level => {
             }
         },
 
+        updateTile (x, y, reRend = true) {
+            const tile = this.map[x][y].tile;
+            if (reRend) {
+                draw_tiles(tiles[tile].image, x, y, 1, 1);
+            }
+            if (!tiles[tile].shadow && this.map[x][y].hasShadow) {
+                this.map[x][y].hasShadow = false;
+                this.updateTile(x, y + 1);
+            }
+            if (tiles[tile].shadow
+                && !tiles[this.map[x][Math.min(y + 1, this.map[x].length - 1)].tile].shadow
+                && !this.map[x][y].hasShadow) {
+                this.hasShadow = true;
+                draw_tiles(tiles[tile].shadow, x, y + tiles[tile].translateShadowY, tiles[tile].shadowWidth, tiles[tile].shadowHeight);
+            }
+            if (tiles[this.map[x][Math.max(y - 1, 0)].tile].shadow && !this.map[x][Math.max(y - 1, 0)].hasShadow && reRend) {
+                this.updateTile(x, Math.max(y - 1, 0), false);
+                this.map[x][Math.max(y - 1, 0)].hasShadow = true;
+            }
+        },
+
         damageTile(x, y, damage) {
             const tile = this.map[x][y].tile;
             if (tiles[tile].unresponsive) return;
@@ -227,7 +255,7 @@ export const createLevel = level => {
                 }
                 this.map[x][y].tile = 0;
                 this.map[x][y].st = 1;
-                draw_tiles(tiles[this.map[x][y].tile].image, x, y, 1, 1)
+                this.updateTile(x, y);
                 if (this.map[x][y].bonus !== undefined) {
                     this.addEntity(createBonus(this, x, y, this.map[x][y].bonus));
                     this.map[x][y].bonus = undefined;
