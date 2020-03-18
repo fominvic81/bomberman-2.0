@@ -13,7 +13,7 @@ import { createSnake } from './entities/snake';
 import { createQueen } from './entities/queen';
 import { createQueenFragment } from './entities/queen_fragment';
 import { rand, isCollide } from './common';
-import { draw, draw_tiles } from './drawing';
+import { draw, draw_tiles, createAnimation } from './drawing';
 import tiles from './tiles';
 import bonuses from './entities/bonus/bonuses';
 
@@ -217,9 +217,14 @@ export const createLevel = level => {
         },
 
         damageTile(x, y, damage) {
+            const tile = this.map[x][y].tile;
+            if (tiles[tile].unresponsive) return;
             this.map[x][y].st -= damage;
 
             if (this.map[x][y].st <= 0) {
+                if (tiles[tile].destroyFrames !== undefined) {
+                    this.addAnimation(createAnimation(this, x, y, 1, 1, tiles[tile].destroyFrames, tiles[tile].destroyTime));
+                }
                 this.map[x][y].tile = 0;
                 this.map[x][y].st = 1;
                 draw_tiles(tiles[this.map[x][y].tile].image, x, y, 1, 1)

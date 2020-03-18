@@ -25,6 +25,8 @@ export const createPlayer = (level, x, y, controls) => {
         ny: y,
         dx: 0,
         dy: 0,
+        translateY: settings.translateY,
+        translateShadowY: settings.translateShadowY,
         dir: 'down',
         time: 0,
         frameTimer: 0,
@@ -34,6 +36,9 @@ export const createPlayer = (level, x, y, controls) => {
         leftFrames: settings.leftFrames,
         rightFrames: settings.rightFrames,
         deadFrames: settings.deadFrames,
+        shadowWidth: settings.shadowWidth,
+        shadowHeight: settings.shadowHeight,
+        shadow: settings.shadow,
         frame: 0,
         putBombTimer: 10,
         touchToBomb: false,
@@ -191,14 +196,15 @@ export const createPlayer = (level, x, y, controls) => {
         },
 
         render () {
+            draw(this.shadow, this.x, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
             if (this.dir === 'down') {
-                draw(this.downFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                draw(this.downFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
             } else if (this.dir === 'up') {
-                draw(this.upFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                draw(this.upFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
             } else if (this.dir === 'left') {
-                draw(this.leftFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                draw(this.leftFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
             } else if (this.dir === 'right') {
-                draw(this.rightFrames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                draw(this.rightFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
             }
         },
 

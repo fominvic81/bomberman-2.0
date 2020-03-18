@@ -1,32 +1,36 @@
-import { img } from './load';
+import { img, imgLoader } from './load';
+
+const imgs = imgLoader('assets/tiles');
 
 export default {
     0: {
         name: 'grass',
-        image: img('assets/grass.png'),
+        image: img('assets/tiles/grass/grass.png'),
         collide: false,
         collideLevel: 0,
-        explosResist: true,
+        unresponsive: true,
         maxSt: 1,
         canHasBonus: false,
     },
 
     1: {
         name: 'brick',
-        image: img('assets/brick.png'),
+        image: img('assets/tiles/brick/brick.png'),
+        destroyFrames: imgs(['brick/brick_destroy1.png', 'brick/brick_destroy2.png', 'brick/brick_destroy3.png', 'brick/brick_destroy4.png']),
+        destroyTime: 0.3,
         collide: true,
         collideLevel: 1,
-        explosResist: false,
+        unresponsive: false,
         maxSt: 1,
         canHasBonus: true,
     },
 
     2: {
         name: 'superWall',
-        image: img('assets/superWall.png'),
+        image: img('assets/tiles/hardWall/hardWall.png'),
         collide: true,
         collideLevel: 2,
-        explosResist: false,
+        unresponsive: false,
         maxSt: Infinity,
         canHasBonus: false,
     },
