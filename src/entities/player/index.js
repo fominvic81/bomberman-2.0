@@ -27,6 +27,7 @@ export const createPlayer = (level, x, y, controls) => {
         dy: 0,
         translateY: settings.translateY,
         translateShadowY: settings.translateShadowY,
+        translateShadowX: settings.translateShadowX,
         dir: 'down',
         time: 0,
         frameTimer: 0,
@@ -196,15 +197,23 @@ export const createPlayer = (level, x, y, controls) => {
         },
 
         render () {
-            draw(this.shadow, this.x, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
-            if (this.dir === 'down') {
-                draw(this.downFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
-            } else if (this.dir === 'up') {
-                draw(this.upFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
-            } else if (this.dir === 'left') {
-                draw(this.leftFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
-            } else if (this.dir === 'right') {
-                draw(this.rightFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
+            switch (this.dir) {
+                case 'down':
+                    draw(this.shadow, this.x, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
+                    draw(this.downFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
+                    break;
+                case 'up':
+                    draw(this.shadow, this.x, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
+                    draw(this.upFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
+                    break;
+                case 'left':
+                    draw(this.shadow, this.x - this.translateShadowX, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
+                    draw(this.leftFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
+                    break;
+                case 'right':
+                    draw(this.shadow, this.x + this.translateShadowX, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
+                    draw(this.rightFrames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
+                    break;
             }
         },
 

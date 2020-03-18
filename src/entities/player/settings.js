@@ -16,6 +16,7 @@ export default {
     deadFrames: imgs(['player_dead1.png', 'player_dead2.png', 'player_dead3.png']),
     shadowWidth: 1.1,
     shadowHeight: 1.1,
+    translateShadowX: 0.15,
     translateShadowY: 0.45,
     shadow: img('assets/player/shadow.png'),
 };
