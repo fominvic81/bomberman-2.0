@@ -14,6 +14,11 @@ export const createBat = (level, x, y) => {
         dx: 0,
         dy: 0,
         dir: 'rand',
+        translateY: settings.translateY,
+        translateShadowY: settings.translateShadowY,
+        shadowWidth: settings.shadowWidth,
+        shadowHeight: settings.shadowHeight,
+        shadow: settings.shadow,
         time: 0,
         frameTimer: 0,
         frame: 0,
@@ -144,7 +149,8 @@ export const createBat = (level, x, y) => {
         },
 
         render () {
-            draw(this.frames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+            draw(this.shadow, this.x, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
+            draw(this.frames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
         },
 
 

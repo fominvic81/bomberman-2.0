@@ -14,6 +14,11 @@ export const createQueenFragment = (level, x, y) => {
         dx: 0,
         dy: 0,
         dir: 'rand',
+        translateY: settings.translateY,
+        translateShadowY: settings.translateShadowY,
+        shadowWidth: settings.shadowWidth,
+        shadowHeight: settings.shadowHeight,
+        shadow: settings.shadow,
         born_time: settings.born_time,
         time: 0,
         frameTimer: 0,
@@ -178,8 +183,9 @@ export const createQueenFragment = (level, x, y) => {
         },
 
         render () {
+            draw(this.shadow, this.x, this.y + this.translateShadowY, this.shadowWidth, this.shadowHeight);
             if (this.time >= this.born_time) {
-                draw(this.frames[this.frame], this.x, this.y, this.rendWidth, this.rendHeight);
+                draw(this.frames[this.frame], this.x, this.y + this.translateY, this.rendWidth, this.rendHeight);
             }
         },
 

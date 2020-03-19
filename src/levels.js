@@ -38,7 +38,7 @@ export const level1 = {
         {name: 'worm', x: 5, y: 5},
         {name: 'worm', x: 3, y: 3},
         {name: 'head', x: 8, y: 6},
-        // {name: 'tripod', x: 6, y: 4},
+        {name: 'tripod', x: 8, y: 6},
     ],
     bonuses: {
         flame: 4,
